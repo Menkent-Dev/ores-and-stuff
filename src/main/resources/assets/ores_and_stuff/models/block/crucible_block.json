@@ -1,0 +1,10 @@
+{
+    "parent": "minecraft:block/cauldron",
+    "textures": {
+        "bottom": "ores_and_stuff:block/crucible_block_bottom",
+        "side": "ores_and_stuff:block/crucible_block_side",
+        "top": "ores_and_stuff:block/crucible_block_top",
+        "inside": "ores_and_stuff:block/crucible_block_inner",
+        "particle": "ores_and_stuff:block/crucible_block_side"
+    }
+}
