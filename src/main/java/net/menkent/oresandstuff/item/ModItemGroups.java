@@ -18,6 +18,8 @@ public class ModItemGroups {
             .title(Component.translatable("itemgroup.ores_and_stuff.ores_n_stuff_items"))
             .displayItems((displayContext, entries) -> {
                 entries.accept(ModBlocks.CRUCIBLE_BLOCK);
+                entries.accept(ModItems.STEEL_INGOT);
+                entries.accept(ModBlocks.STEEL_BLOCK);
             })
             .build()
         );

@@ -7,7 +7,8 @@
 		"side": "ores_and_stuff:block/crucible_block_side",
 		"top": "ores_and_stuff:block/crucible_block_top",
 		"north": "ores_and_stuff:block/crucible_block_north",
-		"missing": "ores_and_stuff:block/empty"
+		"missing": "ores_and_stuff:block/empty",
+		"inside": "block/lava_still"
 	},
 	"elements": [
 		{
@@ -129,6 +130,14 @@
 				"west": {"uv": [0, 0, 8, 2], "texture": "#top"},
 				"up": {"uv": [3, 3, 13, 13], "texture": "#top"},
 				"down": {"uv": [3, 3, 13, 13], "texture": "#top"}
+			}
+		},
+		{
+			"from": [3, 4, 2],
+			"to": [13, 13, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -2, -1]},
+			"faces": {
+				"up": {"uv": [3, 2, 13, 13], "texture": "#inside"}
 			}
 		}
 	]

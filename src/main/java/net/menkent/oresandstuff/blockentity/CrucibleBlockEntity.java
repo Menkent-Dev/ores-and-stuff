@@ -1,9 +1,14 @@
 package net.menkent.oresandstuff.blockentity;
 
+import java.util.Optional;
+
 import org.jetbrains.annotations.Nullable;
+
+import com.mojang.authlib.minecraft.client.MinecraftClient;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.menkent.oresandstuff.block.CrucibleBlock;
+import net.menkent.oresandstuff.recipe.CrucibleRecipe;
 import net.menkent.oresandstuff.screen.CrucibleScreenHandler;
 import net.menkent.oresandstuff.util.fuel.CrucibleFuelRegistry;
 import net.minecraft.core.BlockPos;
@@ -16,8 +21,11 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -25,26 +33,32 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 
 public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
-	private final NonNullList<ItemStack> inventory = NonNullList.withSize(4, ItemStack.EMPTY);
+	private final NonNullList<ItemStack> inventory = NonNullList.withSize(TOTAL_SLOTS, ItemStack.EMPTY);
 
-	private static final int INPUT_SLOT = 0;
-    private static final int INPUT_SLOT2 = 1;
-    private static final int FUEL_SLOT = 2;
-	private static final int OUTPUT_SLOT = 3;
+	public static final int TOTAL_SLOTS = 11;
+    public static final int CRAFTING_SLOTS = 9;
+    public static final int FUEL_SLOT = 9;
+    public static final int OUTPUT_SLOT = 10;
+
 
 	protected final ContainerData propertyDelegate;
-	int progress = 0;
-	int maxProgress = 240; // 20ticks/sec = 12 sec
-	int fuelTime = 0;
-	int fuelDuration = 0;
+	public int progress = 0;
+	public int maxProgress = 240; // 20ticks/sec = 12 sec
+	public int fuelTime = 0;
+	public int fuelDuration = 0;
+	public float storedExperience = 0.0f;
+	public int recipesCraftedSinceLastCollection = 0;
+
 	private int particleCooldown = 0;
 
 	BlockPos pos;
@@ -110,6 +124,8 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 		view.putInt("crucible_block.max_progress", maxProgress);
 		view.putInt("crucible_block.fuel_time", fuelTime);
         view.putInt("crucible_block.fuel_duration", fuelDuration);
+		view.putFloat("crucible_block.stored_experience", storedExperience);
+		view.putInt("crucible_block.recipes_crafted_since_last_collection", recipesCraftedSinceLastCollection);
     }
 
 	@Override
@@ -120,7 +136,13 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 		maxProgress = view.getIntOr("crucible_block.max_progress", 0);
 		fuelTime = view.getIntOr("crucible_block.fuel_time", 0);
         fuelDuration = view.getIntOr("crucible_block.fuel_duration", 0);
+		storedExperience = view.getFloatOr("crucible_block.stored_experience", 0f);
+		recipesCraftedSinceLastCollection = view.getIntOr("crucible_block.recipes_crafted_since_last_collection", 0);
 
+    }
+
+	public static int getCraftingSlot(int row, int column) {
+        return row * 3 + column; // 0-8 for 3x3 grid
     }
 
 	private boolean isBurning() {
@@ -155,27 +177,39 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 		boolean lit = !hasCraftingFinished();
 		boolean wasBurning = isBurning();
 
-		if (isBurning() && world.isClientSide()) {
-            fuelTime--;
-            spawnParticles(world, pos, state);
+		if (isBurning()) {
+			Optional<RecipeHolder<CrucibleRecipe>> recipeHolder = CrucibleRecipe.getRecipeHolderFor(this, level);
+			ItemStack currentOutput;
+
+			if (recipeHolder.isPresent()) {
+                CrucibleRecipe recipe = recipeHolder.get().value();
+                
+                if (this.progress == 0) {
+                    this.maxProgress = recipe.getCookingTime();
+				}
+            }
+			
+			if (world.isClientSide()) {
+				spawnParticles(world, pos, state);
+			}
+
+			if (!world.isClientSide() && hasRecipe()) {
+				fuelTime--;
+				increaseCraftingProgress();
+				setChanged(world, pos, state);
+	
+				if (hasCraftingFinished()) {
+					craftItem();
+					resetProgress();
+				}
+			} else {
+				resetProgress();
+			}
 		}
 
 		if (!isBurning() && canConsumeFuel()) {
             consumeFuel();
         }
-
-		if (isBurning() && hasRecipe()) {
-			increaseCraftingProgress();
-			fuelTime--;
-			setChanged(world, pos, state);
-
-			if (hasCraftingFinished()) {
-				craftItem();
-				resetProgress();
-			}
-		} else {
-			resetProgress();
-		}
 
 		if (state.getValue(CrucibleBlock.LIT) != lit) {
 			world.setBlock(pos, state.setValue(CrucibleBlock.LIT, hasCraftingFinished()), Block.UPDATE_CLIENTS);
@@ -185,9 +219,10 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
         if (wasBurning != isBurning) {
             world.setBlock(pos, state.setValue(CrucibleBlock.LIT, isBurning), Block.UPDATE_CLIENTS);
             setChanged(world, pos, state);
-		}
+    	}
 	}
 
+	// TODO put this in lib
 	private void spawnParticles(Level world, BlockPos pos, BlockState state) {
         // Reduce particle frequency with cooldown
         particleCooldown--;
@@ -198,10 +233,9 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
         
         // Base position (center of block)
         double centerX = pos.getX() + 0.5;
-        double centerY = pos.getY() + 0.8; // Just above the cauldron rim
+        double centerY = pos.getY() + 0.8;
         double centerZ = pos.getZ() + 0.5;
         
-        // Spawn flame particles above the crucible
         for (int i = 0; i < 2; i++) {
             double offsetX = (random.nextDouble() - 0.5) * 0.4;
             double offsetZ = (random.nextDouble() - 0.5) * 0.4;
@@ -236,12 +270,50 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 	}
 
 	private void craftItem() {
-		ItemStack output = new ItemStack(Items.IRON_INGOT, 1);
+        CrucibleRecipe recipe = CrucibleRecipe.getRecipeFor(this, level);
+        if (recipe == null) return;
+        
+        ItemStack result = recipe.getResultItem();
+        recipe.consumeInputs(this);
+        
+        ItemStack currentOutput = getItem(CrucibleBlockEntity.OUTPUT_SLOT);
+        if (currentOutput.isEmpty()) {
+            setItem(CrucibleBlockEntity.OUTPUT_SLOT, result.copy());
+        } else if (currentOutput.is(result.getItem())) {
+            currentOutput.grow(result.getCount());
+        }
+        
+        this.maxProgress = progress;
+        
+        float recipeExperience = recipe.getExperience();
+        if (recipeExperience > 0) {
+            this.storedExperience += recipeExperience;
+            this.recipesCraftedSinceLastCollection++;
+            setChanged();
+        }
+    }
 
-		this.removeItem(INPUT_SLOT, 1);
-        this.removeItem(INPUT_SLOT2, 1);
-		this.setItem(OUTPUT_SLOT, new ItemStack(output.getItem(), this.getItem(OUTPUT_SLOT).getCount() + output.getCount()));
-	}
+	public void awardStoredExperience(Player player) {
+		// if it works, it works
+		Vec3 playerPos = new Vec3(player.getX(), player.getY() ,player.getZ());
+
+        if (this.storedExperience > 0 && !player.level().isClientSide) {
+            int xpToAward = Mth.floor(this.storedExperience);
+            float fractionalPart = this.storedExperience - xpToAward;
+            
+            if (xpToAward > 0) {
+                ExperienceOrb.award(player.getServer().getLevel(player.level().dimension()), playerPos, xpToAward);
+            }
+            
+            if (player.level().random.nextFloat() < fractionalPart) {
+                ExperienceOrb.award(player.getServer().getLevel(player.level().dimension()), CrucibleBlockEntity.this.getBlockPos().getCenter(), 1);
+            }
+            
+            this.storedExperience = 0.0f;
+            this.recipesCraftedSinceLastCollection = 0;
+            setChanged();
+        }
+    }
 
 	private boolean hasCraftingFinished() {
 		return this.progress >= this.maxProgress;
@@ -252,17 +324,15 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 	}
 
 	private boolean hasRecipe() {
-		Item input = Items.COAL;
-        Item input2 = Items.IRON_INGOT;
-
-		ItemStack output = new ItemStack(Items.IRON_INGOT, 1);
-
-		return this.getItem(INPUT_SLOT).is(input) && this.getItem(INPUT_SLOT2).is(input2) &&
-				canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
+		CrucibleRecipe recipe = CrucibleRecipe.getRecipeFor(this, level);
+        if (recipe == null) return false;
+        
+        ItemStack output = recipe.getResultItem();
+        return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output.getItem());
 	}
-
-	private boolean canInsertItemIntoOutputSlot(ItemStack output) {
-		return this.getItem(OUTPUT_SLOT).isEmpty() || this.getItem(OUTPUT_SLOT).getItem() == output.getItem();
+	
+	private boolean canInsertItemIntoOutputSlot(Item output) {
+		return this.getItem(OUTPUT_SLOT).isEmpty() || this.getItem(OUTPUT_SLOT).getItem() == output.asItem();
 	}
 
 	private boolean canInsertAmountIntoOutputSlot(int count) {
@@ -277,6 +347,14 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
             return 0;
         }
         return (float) fuelTime / fuelDuration;
+    }
+
+	public float getStoredExperience() {
+        return this.storedExperience;
+    }
+    
+    public int getRecipesCraftedSinceLastCollection() {
+        return this.recipesCraftedSinceLastCollection;
     }
 
 	@Nullable

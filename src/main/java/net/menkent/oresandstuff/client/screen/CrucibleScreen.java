@@ -18,8 +18,14 @@ public class CrucibleScreen extends AbstractContainerScreen<CrucibleScreenHandle
             ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "textures/gui/crucible_block/crucible_block_gui.png");
     private static final ResourceLocation ARROW_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "textures/gui/common/arrow_progress.png");
-            private static final ResourceLocation FUEL_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "textures/gui/common/fuel_progress.png");
+    private static final ResourceLocation FUEL_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "textures/gui/common/fuel_lava_progress.png");
+
+    private static final int PROGRESS_ARROW_WIDTH = 24;
+    private static final int PROGRESS_ARROW_HEIGHT = 16;
+
+    private static final int FUEL_LAVA_WIDTH = 16;
+    private static final int FUEL_LAVA_HEIGHT = 32;
 
     public CrucibleScreen(CrucibleScreenHandler handler, Inventory inventory,Component title) {
         super(handler, inventory, title);
@@ -37,13 +43,52 @@ public class CrucibleScreen extends AbstractContainerScreen<CrucibleScreenHandle
         int y = (height - imageHeight) / 2;
 
         context.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
+        
+        /**
+         * coming from yarn:
+         * 
+         * 	drawTexture(
+         *      RenderPipeline pipeline, 
+         *      Identifier sprite, 
+         *      int x, 
+         *      int y, 
+         *      float u, 
+         *      float v, 
+         *      int width, 
+         *      int height,
+         *      int textureWidth, 
+         *      int textureHeight
+         *  )
+         */
 
         if (menu.isCrafting()) {
-            context.blit(RenderPipelines.GUI_TEXTURED, ARROW_TEXTURE, x + 86, y + 18, 0, 0, menu.getScaledArrowProgress(), 16, 24, 16);
+            context.blit(
+                RenderPipelines.GUI_TEXTURED, 
+                ARROW_TEXTURE, 
+                x + 101, 
+                y + 35, 
+                0, 
+                0, 
+                menu.getScaledArrowProgress(), 
+                PROGRESS_ARROW_HEIGHT, 
+                PROGRESS_ARROW_WIDTH, 
+                PROGRESS_ARROW_HEIGHT
+            );
         }
 
         if (menu.hasFuel()) {
-            context.blit(RenderPipelines.GUI_TEXTURED, FUEL_TEXTURE, x + 45, y + 38 + 14 - menu.getScaledFuelProgress(), 0, 14 - menu.getScaledFuelProgress(), 14, menu.getScaledFuelProgress(), 14, 14);
+            context.blit(
+                RenderPipelines.GUI_TEXTURED, 
+                FUEL_TEXTURE, 
+                x + 8, 
+                y + 18 + FUEL_LAVA_HEIGHT - menu.getScaledFuelProgress(), 
+                0, 
+                FUEL_LAVA_WIDTH - menu.getScaledFuelProgress(), 
+                FUEL_LAVA_WIDTH, 
+                menu.getScaledFuelProgress(), 
+                FUEL_LAVA_WIDTH, 
+                FUEL_LAVA_HEIGHT
+            );
         }
     }
 

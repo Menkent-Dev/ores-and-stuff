@@ -1,0 +1,13 @@
+{
+    "type": "ores_and_stuff:crucible",
+    "ingredients": [
+      "minecraft:iron_ingot",
+      "minecraft:coal"
+    ],
+    "result": {
+      "id": "ores_and_stuff:steel_ingot",
+      "count": 1
+    },
+    "cookingtime": 400,
+    "experience": 2.5
+}

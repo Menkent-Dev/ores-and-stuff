@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "iGi",
+        "SCS",
+        "SiS"
+    ],
+    "key": {
+        "i": "minecraft:iron_ingot",
+        "G": "minecraft:glass_pane",
+        "S": "minecraft:stone",
+        "C": "minecraft:cauldron"
+    },
+    "result": {
+        "id": "ores_and_stuff:crucible_block",
+        "count": 1
+    }
+}

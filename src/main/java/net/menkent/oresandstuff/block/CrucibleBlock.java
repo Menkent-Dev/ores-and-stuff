@@ -33,18 +33,21 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
 public class CrucibleBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    public static final BooleanProperty IS_FILLED = BooleanProperty.create("IS_FILLED");
     
-    private static final VoxelShape RIM_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0);
-    private static final VoxelShape LEG1 = Block.box(1.0, 0.0, 1.0, 4.0, 6.0, 4.0);
-    private static final VoxelShape LEG2 = Block.box(12.0, 0.0, 1.0, 15.0, 6.0, 4.0);
-    private static final VoxelShape LEG3 = Block.box(1.0, 0.0, 12.0, 4.0, 6.0, 15.0);
-    private static final VoxelShape LEG4 = Block.box(12.0, 0.0, 12.0, 15.0, 6.0, 15.0);
-    private static final VoxelShape CAULDRON_SHAPE = Shapes.or(RIM_SHAPE, LEG1, LEG2, LEG3, LEG4);
+    private static final VoxelShape FRONT = Block.box(0.0, 4.0, 0.0, 16.0, 16.0, 3.0);
+    private static final VoxelShape BACK =  Block.box(0.0, 4.0, 13.0, 16.0, 16.0, 16.0);
+    private static final VoxelShape SIDE1 = Block.box(13.0, 4.0, 3.0, 16.0, 16.0, 13.0);
+    private static final VoxelShape SIDE2 = Block.box(0.0, 4.0, 3.0, 3.0, 16.0, 13.0);
+    private static final VoxelShape TOP =   Block.box(3.0, 14.0, 3.0, 13.0, 16.0, 13.0);
+    private static final VoxelShape BOTTOM = Block.box(0.0, 3.0, 0.0, 16.0, 4.0, 16.0);
+    private static final VoxelShape LEG1 = Block.box(0.0, 0.0, 0.0, 4.0, 3.0, 4.0);
+    private static final VoxelShape LEG2 = Block.box(12.0, 0.0, 0.0, 16.0, 3.0, 4.0);
+    private static final VoxelShape LEG3 = Block.box(0.0, 0.0, 12.0, 4.0, 3.0, 16.0);
+    private static final VoxelShape LEG4 = Block.box(12.0, 0.0, 12.0, 16.0, 3.0, 16.0);
+    private static final VoxelShape SHAPE = Shapes.or(FRONT, BACK, BOTTOM, TOP, SIDE1, SIDE2, LEG1, LEG2, LEG3, LEG4);
 
     public static final MapCodec<CrucibleBlock> CODEC = CrucibleBlock.simpleCodec(CrucibleBlock::new);
 
@@ -54,19 +57,17 @@ public class CrucibleBlock extends BaseEntityBlock {
             .any()
             .setValue(FACING, Direction.NORTH)
             .setValue(LIT, false)
-            .setValue(IS_FILLED, true)
         );
-
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return CAULDRON_SHAPE;
+        return SHAPE;
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return CAULDRON_SHAPE;
+    public VoxelShape getCollisionShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
+        return SHAPE;
     }
 
     @Override
@@ -110,27 +111,14 @@ public class CrucibleBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT, IS_FILLED);
+        builder.add(FACING, LIT);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         return this.defaultBlockState()
             .setValue(FACING, ctx.getHorizontalDirection().getOpposite())
-            .setValue(LIT, false)
-            .setValue(IS_FILLED, false);
-    }
-
-    protected void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (!world.isClientSide()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof CrucibleBlockEntity crucible) {
-                boolean isFilled = crucible.isFilled();
-                if (state.getValue(IS_FILLED) != isFilled) {
-                    world.setBlockAndUpdate(pos, state.setValue(IS_FILLED, isFilled));
-                }
-            }
-        }
+            .setValue(LIT, false);
     }
 
     @Override

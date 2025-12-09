@@ -8,6 +8,7 @@ import net.menkent.oresandstuff.block.ModBlocks;
 import net.menkent.oresandstuff.blockentity.ModBlockEntities;
 import net.menkent.oresandstuff.item.ModItemGroups;
 import net.menkent.oresandstuff.item.ModItems;
+import net.menkent.oresandstuff.recipe.ModRecipes;
 import net.menkent.oresandstuff.screen.ModScreens;
 import net.menkent.oresandstuff.util.fuel.ModFuelRegistry;
 
@@ -17,13 +18,17 @@ public class OresNStuff implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		LOGGER.info("Initializing all mod packages");
 		// utils first
 		ModFuelRegistry.register();
 
-		ModItemGroups.register();
-		ModItems.register();
 		ModBlocks.register();
+		ModItems.register();
+		ModItemGroups.register();
+		ModRecipes.register();
 		ModBlockEntities.register();
 		ModScreens.register();
+
+		LOGGER.info("All packages initialized");
 	}
 }

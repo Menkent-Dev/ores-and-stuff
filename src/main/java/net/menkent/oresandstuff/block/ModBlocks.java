@@ -11,22 +11,44 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 public class ModBlocks {
+
+    // why so many properties :sob: (wait, this ain't discord)
 
     public static final Block CRUCIBLE_BLOCK = register(
         "crucible_block", 
         CrucibleBlock::new, 
         BlockBehaviour.Properties.of()
-			.mapColor(MapColor.STONE)
+			.mapColor(MapColor.COLOR_GRAY)
+            .sound(SoundType.METAL)
         	.requiresCorrectToolForDrops()
-        	.strength(2.0f, 6.0f)
+        	.strength(7.0f, 12.0f)
         	.lightLevel(state -> state.getValue(CrucibleBlock.LIT) ? 13 : 0)
-        	.noOcclusion(),
+        	.noOcclusion()
+            .isValidSpawn(Blocks::never)
+            .isSuffocating(Blocks::never)
+            .isViewBlocking(Blocks::never)
+            .isRedstoneConductor(Blocks::never)
+            .pushReaction(PushReaction.DESTROY),
         true
     );
+
+    public static final Block STEEL_BLOCK = register(
+		"steel_block",
+		Block::new,
+		BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_GRAY)
+            .strength(15.0f, 25.0f)
+            .sound(SoundType.METAL)
+            .requiresCorrectToolForDrops(),
+		true
+);
 
     public static Block register( 
         String name, 
