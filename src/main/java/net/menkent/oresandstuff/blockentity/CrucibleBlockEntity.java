@@ -4,8 +4,6 @@ import java.util.Optional;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
-
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.menkent.oresandstuff.block.CrucibleBlock;
 import net.menkent.oresandstuff.recipe.CrucibleRecipe;
@@ -23,7 +21,6 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
@@ -179,7 +176,6 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 
 		if (isBurning()) {
 			Optional<RecipeHolder<CrucibleRecipe>> recipeHolder = CrucibleRecipe.getRecipeHolderFor(this, level);
-			ItemStack currentOutput;
 
 			if (recipeHolder.isPresent()) {
                 CrucibleRecipe recipe = recipeHolder.get().value();

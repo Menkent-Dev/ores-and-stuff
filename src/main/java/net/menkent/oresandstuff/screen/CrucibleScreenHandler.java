@@ -122,14 +122,11 @@ public class CrucibleScreenHandler extends AbstractContainerMenu{
             itemStack = itemStack1.copy();
             
             if (index == CrucibleBlockEntity.OUTPUT_SLOT) {
-                // From output to inventory
                 if (!this.moveItemStackTo(itemStack1, 11, 47, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(itemStack1, itemStack);
             } else if (index >= 11) {
-                // From player inventory
-                // Check if it's fuel
                 if (CrucibleFuelRegistry.getFuelTime(itemStack1.getItem()) > 0) {
                     if (!this.moveItemStackTo(itemStack1, 9, 10, false)) {
                         return ItemStack.EMPTY;

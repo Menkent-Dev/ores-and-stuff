@@ -13,7 +13,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.references.Blocks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -51,7 +50,14 @@ public class CrucibleRecipe implements Recipe<CrucibleRecipeInput> {
         int cookingTime, 
         float experience
     ) {
-        this(id, ingredients, output, cookingTime, experience, "");
+        this(
+            id, 
+            ingredients, 
+            output, 
+            cookingTime, 
+            experience, 
+            ""
+        );
     }
 
 
