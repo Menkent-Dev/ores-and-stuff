@@ -19,8 +19,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -29,6 +31,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -58,6 +62,18 @@ public class CrucibleBlock extends BaseEntityBlock {
             .setValue(FACING, Direction.NORTH)
             .setValue(LIT, false)
         );
+
+        settings.mapColor(MapColor.COLOR_GRAY)
+            .sound(SoundType.STONE)
+            .requiresCorrectToolForDrops()
+            .strength(7.0f, 12.0f)
+            .lightLevel(state -> state.getValue(CrucibleBlock.LIT) ? 13 : 0)
+            .noOcclusion()
+            .isValidSpawn(Blocks::never)
+            .isSuffocating(Blocks::never)
+            .isViewBlocking(Blocks::never)
+            .isRedstoneConductor(Blocks::never)
+            .pushReaction(PushReaction.DESTROY);
     }
 
     @Override

@@ -11,11 +11,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
 
 public class ModBlocks {
 
@@ -24,18 +22,7 @@ public class ModBlocks {
     public static final Block CRUCIBLE_BLOCK = register(
         "crucible_block", 
         CrucibleBlock::new, 
-        BlockBehaviour.Properties.of()
-			.mapColor(MapColor.COLOR_GRAY)
-            .sound(SoundType.METAL)
-        	.requiresCorrectToolForDrops()
-        	.strength(7.0f, 12.0f)
-        	.lightLevel(state -> state.getValue(CrucibleBlock.LIT) ? 13 : 0)
-        	.noOcclusion()
-            .isValidSpawn(Blocks::never)
-            .isSuffocating(Blocks::never)
-            .isViewBlocking(Blocks::never)
-            .isRedstoneConductor(Blocks::never)
-            .pushReaction(PushReaction.DESTROY),
+        BlockBehaviour.Properties.of(),
         true
     );
 
