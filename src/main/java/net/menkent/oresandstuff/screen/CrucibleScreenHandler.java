@@ -1,6 +1,7 @@
 package net.menkent.oresandstuff.screen;
 
 import net.menkent.oresandstuff.blockentity.CrucibleBlockEntity;
+import net.menkent.oresandstuff.recipe.CrucibleRecipe;
 import net.menkent.oresandstuff.util.fuel.CrucibleFuelRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
@@ -52,7 +53,12 @@ public class CrucibleScreenHandler extends AbstractContainerMenu{
         this.addSlot(new Slot(inventory, 8, 80, 53));
         
         // Fuel and output slots
-        this.addSlot(new Slot(inventory, 9, 8, 53));
+        this.addSlot(new Slot(inventory, 9, 8, 53) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return placeFuel(stack);
+            }
+        });
         this.addSlot(new Slot(inventory, 10, 133, 34) {
             @Override
             public boolean mayPlace(ItemStack stack) {
@@ -82,6 +88,10 @@ public class CrucibleScreenHandler extends AbstractContainerMenu{
 
     public void awardExperience(Player player) {
         blockEntity.awardStoredExperience(player);
+    }
+
+    public boolean placeFuel(ItemStack itemStack) {
+        return CrucibleFuelRegistry.getFuelTime(itemStack.getItem()) > 0;
     }
     
     public boolean isCrafting() {

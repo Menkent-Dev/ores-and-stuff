@@ -9,7 +9,6 @@ import net.menkent.oresandstuff.block.CrucibleBlock;
 import net.menkent.oresandstuff.recipe.CrucibleRecipe;
 import net.menkent.oresandstuff.screen.CrucibleScreenHandler;
 import net.menkent.oresandstuff.util.fuel.CrucibleFuelRegistry;
-import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -20,7 +19,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -200,8 +198,8 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 				setChanged(world, pos, state);
 
 				if (this.soundCooldown <= 0) {
-					level.playSound(null, pos, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 0.1F, 0.9F + level.random.nextFloat() * 0.2F);
-					soundCooldown = 20 + level.random.nextInt(40);
+					level.playSound(null, pos, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 0.9F + level.random.nextFloat() * 0.2F);
+					soundCooldown = 20 + level.random.nextInt(20);
 				} else if (this.soundCooldown > 0) {
 					soundCooldown--;
 				}
