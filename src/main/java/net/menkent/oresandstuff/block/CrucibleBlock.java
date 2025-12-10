@@ -63,7 +63,8 @@ public class CrucibleBlock extends BaseEntityBlock {
             .setValue(LIT, false)
         );
 
-        settings.mapColor(MapColor.COLOR_GRAY)
+        settings
+            .mapColor(MapColor.COLOR_GRAY)
             .sound(SoundType.STONE)
             .requiresCorrectToolForDrops()
             .strength(7.0f, 12.0f)

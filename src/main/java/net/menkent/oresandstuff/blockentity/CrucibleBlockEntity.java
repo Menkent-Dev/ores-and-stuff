@@ -9,6 +9,7 @@ import net.menkent.oresandstuff.block.CrucibleBlock;
 import net.menkent.oresandstuff.recipe.CrucibleRecipe;
 import net.menkent.oresandstuff.screen.CrucibleScreenHandler;
 import net.menkent.oresandstuff.util.fuel.CrucibleFuelRegistry;
+import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -19,6 +20,9 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.ContainerHelper;
@@ -57,6 +61,7 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 	public int recipesCraftedSinceLastCollection = 0;
 
 	private int particleCooldown = 0;
+	private int soundCooldown = 0;
 
 	BlockPos pos;
 	Level world;
@@ -169,11 +174,11 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
             }
         }
 	}
-
 	public void tick(Level world, BlockPos pos, BlockState state) {
 		boolean lit = !hasCraftingFinished();
 		boolean wasBurning = isBurning();
 
+		// the nesting here is diabolical
 		if (isBurning()) {
 			Optional<RecipeHolder<CrucibleRecipe>> recipeHolder = CrucibleRecipe.getRecipeHolderFor(this, level);
 
@@ -193,6 +198,13 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 				fuelTime--;
 				increaseCraftingProgress();
 				setChanged(world, pos, state);
+
+				if (this.soundCooldown <= 0) {
+					level.playSound(null, pos, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 0.1F, 0.9F + level.random.nextFloat() * 0.2F);
+					soundCooldown = 20 + level.random.nextInt(40);
+				} else if (this.soundCooldown > 0) {
+					soundCooldown--;
+				}
 	
 				if (hasCraftingFinished()) {
 					craftItem();
@@ -218,7 +230,7 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
     	}
 	}
 
-	// TODO put this in lib
+	//  TODO put this in lib
 	private void spawnParticles(Level world, BlockPos pos, BlockState state) {
         // Reduce particle frequency with cooldown
         particleCooldown--;
