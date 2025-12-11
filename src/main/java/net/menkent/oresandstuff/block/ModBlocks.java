@@ -17,12 +17,11 @@ import net.minecraft.world.level.material.MapColor;
 
 public class ModBlocks {
 
-    // why so many properties :sob: (wait, this ain't discord)
-
     public static final Block CRUCIBLE_BLOCK = register(
         "crucible_block", 
         CrucibleBlock::new, 
-        BlockBehaviour.Properties.of(),
+        BlockBehaviour.Properties.of()
+            .lightLevel(state -> state.getValue(CrucibleBlock.LIT) ? 13 : 0),
         true
     );
 

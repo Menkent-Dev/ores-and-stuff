@@ -1,8 +1,11 @@
 package net.menkent.oresandstuff.screen;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.menkent.oresandstuff.blockentity.CrucibleBlockEntity;
-import net.menkent.oresandstuff.recipe.CrucibleRecipe;
 import net.menkent.oresandstuff.util.fuel.CrucibleFuelRegistry;
+import net.menkent.oresandstuff.util.inventory.InventorySlots;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -11,14 +14,19 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class CrucibleScreenHandler extends AbstractContainerMenu{
+public class CrucibleScreenHandler extends AbstractContainerMenu {
+    private Map<Item, Integer> fuelMap = new HashMap<>();
+    private InventorySlots inventorySlots = new InventorySlots();
+
     private final Container inventory;
     private final ContainerData propertyDelegate;
     public final CrucibleBlockEntity blockEntity;
     public final Player player;
+    private final CrucibleFuelRegistry fuelRegistry = new CrucibleFuelRegistry(fuelMap);
     
     public CrucibleScreenHandler(int syncId, Inventory inventory, BlockPos pos) {
         this(
@@ -53,18 +61,8 @@ public class CrucibleScreenHandler extends AbstractContainerMenu{
         this.addSlot(new Slot(inventory, 8, 80, 53));
         
         // Fuel and output slots
-        this.addSlot(new Slot(inventory, 9, 8, 53) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return placeFuel(stack);
-            }
-        });
-        this.addSlot(new Slot(inventory, 10, 133, 34) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return false;
-            }
-
+        this.addSlot(inventorySlots.new FuelSlot(fuelRegistry, inventory, 10, 133, 34));
+        this.addSlot(inventorySlots.new AbstractOutputSlot(inventory, 10, 133, 34) {
             @Override
             public void onTake(Player player, ItemStack itemStack) {
                 super.onTake(player, itemStack);
@@ -81,17 +79,12 @@ public class CrucibleScreenHandler extends AbstractContainerMenu{
             }
         });
 
-        addPlayerInventory(playerInventory);
-        addPlayerHotbar(playerInventory);
+        addStandardInventorySlots(playerInventory, 8, 84);
         addDataSlots(arrayPropertyDelegate);
     }
 
     public void awardExperience(Player player) {
         blockEntity.awardStoredExperience(player);
-    }
-
-    public boolean placeFuel(ItemStack itemStack) {
-        return CrucibleFuelRegistry.getFuelTime(itemStack.getItem()) > 0;
     }
     
     public boolean isCrafting() {
@@ -167,20 +160,6 @@ public class CrucibleScreenHandler extends AbstractContainerMenu{
     @Override
     public boolean stillValid(Player player) {
         return this.inventory.stillValid(player);
-    }
-    
-    private void addPlayerInventory(Inventory playerInventory) {
-        for (int i = 0; i < 3; ++i) {
-            for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
-            }
-        }
-    }
-
-    private void addPlayerHotbar(Inventory playerInventory) {
-        for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-        }
     }
 }
 

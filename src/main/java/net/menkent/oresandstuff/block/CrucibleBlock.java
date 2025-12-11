@@ -68,7 +68,6 @@ public class CrucibleBlock extends BaseEntityBlock {
             .sound(SoundType.STONE)
             .requiresCorrectToolForDrops()
             .strength(7.0f, 12.0f)
-            .lightLevel(state -> state.getValue(CrucibleBlock.LIT) ? 13 : 0)
             .noOcclusion()
             .isValidSpawn(Blocks::never)
             .isSuffocating(Blocks::never)

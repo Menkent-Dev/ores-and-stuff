@@ -1,4 +1,4 @@
-package net.menkent.oresandstuff.blockentity;
+package net.menkent.oresandstuff.util.inventory;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;

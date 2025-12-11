@@ -9,6 +9,7 @@ import net.menkent.oresandstuff.block.CrucibleBlock;
 import net.menkent.oresandstuff.recipe.CrucibleRecipe;
 import net.menkent.oresandstuff.screen.CrucibleScreenHandler;
 import net.menkent.oresandstuff.util.fuel.CrucibleFuelRegistry;
+import net.menkent.oresandstuff.util.inventory.ImplementedInventory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
