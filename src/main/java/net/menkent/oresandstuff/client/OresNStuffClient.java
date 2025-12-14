@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 public class OresNStuffClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.putBlock(ModBlocks.CRUCIBLE_BLOCK, ChunkSectionLayer.CUTOUT);
+        BlockRenderLayerMap.putBlock(ModBlocks.CRUCIBLE, ChunkSectionLayer.CUTOUT);
 
         MenuScreens.register(ModScreens.CRUCIBLE_SCREEN_HANDLER, CrucibleScreen::new);
     }

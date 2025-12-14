@@ -14,10 +14,10 @@ public class ModItemGroups {
     public static final CreativeModeTab ORES_N_STUFF_ITEM_GROUP = Registry.register(
         BuiltInRegistries.CREATIVE_MODE_TAB, 
         ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "ores_n_stuff_items"), 
-        FabricItemGroup.builder().icon(() -> new ItemStack(ModBlocks.CRUCIBLE_BLOCK))
+        FabricItemGroup.builder().icon(() -> new ItemStack(ModBlocks.CRUCIBLE))
             .title(Component.translatable("itemgroup.ores_and_stuff.ores_n_stuff_items"))
             .displayItems((displayContext, entries) -> {
-                entries.accept(ModBlocks.CRUCIBLE_BLOCK);
+                entries.accept(ModBlocks.CRUCIBLE);
                 entries.accept(ModItems.STEEL_INGOT);
                 entries.accept(ModBlocks.STEEL_BLOCK);
             })

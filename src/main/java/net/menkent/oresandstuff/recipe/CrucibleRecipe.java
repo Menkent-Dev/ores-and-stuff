@@ -82,22 +82,15 @@ public class CrucibleRecipe implements Recipe<CrucibleRecipeInput> {
     for (int i = 0; i < 9; i++) {
         availableItems[i] = recipeInput.getItem(i).copy();
     }
-    
-    // For each ingredient in the recipe
     for (Ingredient ingredient : ingredients) {
         boolean foundMatch = false;
-        
-        // Try to find a matching item in any slot
         for (int i = 0; i < 9; i++) {
             if (!availableItems[i].isEmpty() && ingredient.test(availableItems[i])) {
-                // Found a match - "consume" this item
                 availableItems[i].shrink(1);
                 foundMatch = true;
                 break;
             }
         }
-        
-        // If we couldn't find a match for this ingredient, recipe doesn't match
         if (!foundMatch) {
             return false;
         }
@@ -143,7 +136,6 @@ public class CrucibleRecipe implements Recipe<CrucibleRecipeInput> {
     }
 
     public void consumeInputs(CrucibleBlockEntity crucible) {
-        // For each ingredient, find and remove one matching item
         for (Ingredient ingredient : ingredients) {
             for (int i = 0; i < 9; i++) {
                 ItemStack stack = crucible.getItem(i);
@@ -156,7 +148,7 @@ public class CrucibleRecipe implements Recipe<CrucibleRecipeInput> {
     }
 
     public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= ingredients.size(); // Need enough space for ingredients
+        return width * height >= ingredients.size();
     }
 
     public static Optional<RecipeHolder<CrucibleRecipe>> getRecipeHolderFor(CrucibleBlockEntity crucible, Level level) {
@@ -188,7 +180,6 @@ public class CrucibleRecipe implements Recipe<CrucibleRecipeInput> {
         
         private static final MapCodec<CrucibleRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> 
             instance.group(
-                // List of ingredients (1-9 items, order doesn't matter)
                 Ingredient.CODEC
                     .listOf(1, 9)
                     .fieldOf("ingredients")
@@ -198,7 +189,6 @@ public class CrucibleRecipe implements Recipe<CrucibleRecipeInput> {
                             return DataResult.error(() -> 
                                 "Crucible recipe must have 1 to 9 ingredients, got " + list.size());
                         }
-                        // Convert to NonNullList
                         NonNullList<Ingredient> nonNullList = NonNullList.create();
                         nonNullList.addAll(list);
                         return DataResult.success(nonNullList);
@@ -212,7 +202,7 @@ public class CrucibleRecipe implements Recipe<CrucibleRecipeInput> {
                 
                 // Optional cooking time
                 Codec.INT
-                    .optionalFieldOf("cookingtime", 240)
+                    .optionalFieldOf("cookingtime", 200)
                     .forGetter(recipe -> recipe.cookingTime),
                 
                 // Optional experience

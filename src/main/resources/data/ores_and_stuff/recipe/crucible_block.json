@@ -12,7 +12,7 @@
         "C": "minecraft:cauldron"
     },
     "result": {
-        "id": "ores_and_stuff:crucible_block",
+        "id": "ores_and_stuff:crucible",
         "count": 1
     }
 }

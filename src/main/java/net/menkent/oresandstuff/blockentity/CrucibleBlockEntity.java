@@ -108,7 +108,7 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 
 	@Override
 	public Component getDisplayName() {
-		return Component.translatable("block.ores_and_stuff.crucible_block");
+		return Component.translatable("block.ores_and_stuff.crucible");
 	}
 
 	@Nullable
@@ -121,24 +121,24 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 	protected void saveAdditional(ValueOutput view) {
         super.saveAdditional(view);
         ContainerHelper.saveAllItems(view, inventory);
-        view.putInt("crucible_block.progress", progress);
-		view.putInt("crucible_block.max_progress", maxProgress);
-		view.putInt("crucible_block.fuel_time", fuelTime);
-        view.putInt("crucible_block.fuel_duration", fuelDuration);
-		view.putFloat("crucible_block.stored_experience", storedExperience);
-		view.putInt("crucible_block.recipes_crafted_since_last_collection", recipesCraftedSinceLastCollection);
+        view.putInt("crucible.progress", progress);
+		view.putInt("crucible.max_progress", maxProgress);
+		view.putInt("crucible.fuel_time", fuelTime);
+        view.putInt("crucible.fuel_duration", fuelDuration);
+		view.putFloat("crucible.stored_experience", storedExperience);
+		view.putInt("crucible.recipes_crafted_since_last_collection", recipesCraftedSinceLastCollection);
     }
 
 	@Override
 	protected void loadAdditional(ValueInput view) {
 		super.loadAdditional(view);
         ContainerHelper.loadAllItems(view, inventory);
-		progress = view.getIntOr("crucible_block.progress", 0 );
-		maxProgress = view.getIntOr("crucible_block.max_progress", 0);
-		fuelTime = view.getIntOr("crucible_block.fuel_time", 0);
-        fuelDuration = view.getIntOr("crucible_block.fuel_duration", 0);
-		storedExperience = view.getFloatOr("crucible_block.stored_experience", 0f);
-		recipesCraftedSinceLastCollection = view.getIntOr("crucible_block.recipes_crafted_since_last_collection", 0);
+		progress = view.getIntOr("crucible.progress", 0 );
+		maxProgress = view.getIntOr("crucible.max_progress", 0);
+		fuelTime = view.getIntOr("crucible.fuel_time", 0);
+        fuelDuration = view.getIntOr("crucible.fuel_duration", 0);
+		storedExperience = view.getFloatOr("crucible.stored_experience", 0f);
+		recipesCraftedSinceLastCollection = view.getIntOr("crucible.recipes_crafted_since_last_collection", 0);
 
     }
 
@@ -188,10 +188,6 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
                     this.maxProgress = recipe.getCookingTime();
 				}
             }
-			
-			if (world.isClientSide()) {
-				spawnParticles(world, pos, state);
-			}
 
 			if (!world.isClientSide() && hasRecipe()) {
 				fuelTime--;
@@ -229,7 +225,7 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
     	}
 	}
 
-	//  TODO put this in lib
+	// TODO put this in lib
 	private void spawnParticles(Level world, BlockPos pos, BlockState state) {
         // Reduce particle frequency with cooldown
         particleCooldown--;

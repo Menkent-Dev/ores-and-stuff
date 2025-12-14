@@ -1,12 +1,12 @@
 {
 	"parent": "minecraft:block/block",
 	"textures": {
-		"bottom": "ores_and_stuff:block/crucible_block_bottom",
-		"legs": "ores_and_stuff:block/crucible_block_legs",
-		"particle": "ores_and_stuff:block/crucible_block_side",
-		"side": "ores_and_stuff:block/crucible_block_side",
-		"top": "ores_and_stuff:block/crucible_block_top",
-		"north": "ores_and_stuff:block/crucible_block_north",
+		"bottom": "ores_and_stuff:block/crucible_bottom",
+		"legs": "ores_and_stuff:block/crucible_legs",
+		"particle": "ores_and_stuff:block/crucible_side",
+		"side": "ores_and_stuff:block/crucible_side",
+		"top": "ores_and_stuff:block/crucible_top",
+		"north": "ores_and_stuff:block/crucible_north",
 		"missing": "ores_and_stuff:block/empty"
 	},
 	"elements": [

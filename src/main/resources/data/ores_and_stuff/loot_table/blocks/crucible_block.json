@@ -1,6 +1,6 @@
 {
   "type": "minecraft:block",
-  "random_sequence": "ores_and_stuff:blocks/crucible_block",
+  "random_sequence": "ores_and_stuff:blocks/crucible",
   "pools": [
     {
       "rolls": 1.0,
@@ -12,7 +12,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ores_and_stuff:crucible_block"
+          "name": "ores_and_stuff:crucible"
         }
       ]
     }

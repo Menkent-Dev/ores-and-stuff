@@ -19,6 +19,8 @@ public class OresNStuff implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Initializing all mod packages");
+		// idc if they're mad with this lmao
+		LOGGER.info("No mixins detected, skipping");
 		// utils first
 		ModFuelRegistry.register();
 

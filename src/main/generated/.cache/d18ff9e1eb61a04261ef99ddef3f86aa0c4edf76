@@ -1,0 +1,9 @@
+// 1.21.8	-999999999-01-01T00:00:00	Ores 'N Stuff/Ores N' Stuff Recipes
+8278ee7ae345124023a0be7409d52a664e611c5c data/ores_and_stuff/advancement/recipe/crucible/steel_ingot.json
+6928fb5ba16d560d30340b240192ea0bc77d7f08 data/ores_and_stuff/advancement/recipes/building_blocks/steel_block.json
+5f6897fc0a7ece0b0dada35de8a906c1ceba7d32 data/ores_and_stuff/advancement/recipes/decorations/crucible.json
+4b7fd058005028feccfb2dde10cb6777d75d5898 data/ores_and_stuff/advancement/recipes/misc/steel_ingot_from_block.json
+0d4241aa2c1665c9489fa48b821c7ee811c7e106 data/ores_and_stuff/recipe/crucible.json
+bc8052969b77ab989ef69c85e369db742ebef6e5 data/ores_and_stuff/recipe/steel_block.json
+84cb911616e4b54db3b895321fb2f3f2254b3d84 data/ores_and_stuff/recipe/steel_ingot.json
+3298df43a95f5c3e68af046f503a0955c072000c data/ores_and_stuff/recipe/steel_ingot_from_block.json

@@ -6,7 +6,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * A very simple {@code Slots} util for making easy inventory slots
+ * A very simple {@link Slot} util for making easy inventory slots
  *
  * @author Menkent
  */

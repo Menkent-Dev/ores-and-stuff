@@ -17,8 +17,8 @@ import net.minecraft.world.level.material.MapColor;
 
 public class ModBlocks {
 
-    public static final Block CRUCIBLE_BLOCK = register(
-        "crucible_block", 
+    public static final Block CRUCIBLE = register(
+        "crucible", 
         CrucibleBlock::new, 
         BlockBehaviour.Properties.of()
             .lightLevel(state -> state.getValue(CrucibleBlock.LIT) ? 13 : 0),

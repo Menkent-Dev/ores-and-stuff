@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
 @Environment(EnvType.CLIENT)
 public class CrucibleScreen extends AbstractContainerScreen<CrucibleScreenHandler> {
     private static final ResourceLocation GUI_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "textures/gui/crucible_block/crucible_block_gui.png");
+            ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "textures/gui/crucible/crucible_gui.png");
     private static final ResourceLocation ARROW_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "textures/gui/common/arrow_progress.png");
     private static final ResourceLocation FUEL_TEXTURE =
