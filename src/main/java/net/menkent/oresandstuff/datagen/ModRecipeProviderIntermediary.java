@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import net.menkent.oresandstuff.OresNStuff;
 import net.menkent.oresandstuff.datagen.recipe.CrucibleRecipeBuilder;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.Criterion;
@@ -42,12 +43,12 @@ public class ModRecipeProviderIntermediary {
         return CrucibleRecipeBuilder.crucible(this.items, itemStack);
     }
 
-    public void crucibleSmelting(ItemStack itemStack, ItemLike ingredient, ItemLike unlockedBy) {
-        crucibleSmelting(itemStack.getItem(), ingredient, unlockedBy);
+    public void crucibleSmelting(ItemStack itemStack, ItemLike ingredient, float experience, ItemLike unlockedBy) {
+        crucibleSmelting(itemStack.getItem(), ingredient, experience, unlockedBy);
     }
 
-    public void crucibleSmelting(ItemLike itemLike, ItemLike ingredient, ItemLike unlockedBy) {
-        CrucibleRecipeBuilder.crucible(this.items, itemLike).ingredient(ingredient).unlockedBy(RecipeProvider.getHasName(unlockedBy), this.has(unlockedBy)).save(this.output, getItemName(itemLike) + "_from_crucible_smelting_" + getItemName(ingredient));
+    public void crucibleSmelting(ItemLike itemLike, ItemLike ingredient, float experience, ItemLike unlockedBy) {
+        CrucibleRecipeBuilder.crucible(this.items, itemLike).ingredient(ingredient).experience(experience).unlockedBy(RecipeProvider.getHasName(unlockedBy), this.has(unlockedBy)).save(this.output, OresNStuff.MOD_ID + ":" + getItemName(itemLike) + "_from_crucible_smelting_" + getItemName(ingredient));
     }
 
     public Criterion<InventoryChangeTrigger.TriggerInstance> has(ItemLike itemLike) {

@@ -62,9 +62,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                     .unlockedBy("has_iron_and_coal", createRecipeProvider(registryLookup, exporter).has(Items.IRON_INGOT))
                     .save(exporter);
                 
-                recipeProviderIntermediary.crucibleSmelting(Items.GOLD_INGOT, Items.GOLD_ORE, Items.GOLD_ORE);
-                recipeProviderIntermediary.crucibleSmelting(Items.IRON_INGOT, Items.IRON_ORE, Items.IRON_ORE);
-                recipeProviderIntermediary.crucibleSmelting(Items.COPPER_INGOT, Items.COPPER_ORE, Items.COPPER_ORE);
+                recipeProviderIntermediary.crucibleSmelting(Items.GOLD_INGOT, Items.GOLD_ORE, 1.0F, Items.GOLD_ORE);
+                recipeProviderIntermediary.crucibleSmelting(Items.IRON_INGOT, Items.IRON_ORE, 0.7F, Items.IRON_ORE);
+                recipeProviderIntermediary.crucibleSmelting(Items.COPPER_INGOT, Items.COPPER_ORE, 0.7F, Items.COPPER_ORE);
             }
             
         };
