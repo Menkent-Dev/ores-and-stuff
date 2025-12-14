@@ -1,12 +1,17 @@
 package net.menkent.oresandstuff.util.fuel;
 
+import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 public class CrucibleFuelRegistry extends AbstractFuelRegistry{
-    public CrucibleFuelRegistry(Map<Item, Integer> fuelMap) {
-        super(fuelMap);
+    public CrucibleFuelRegistry() {
+        super();
+    }
+
+    public CrucibleFuelRegistry(int time) {
+        super(new HashMap<>(), time);
     }
 
     public void register() {

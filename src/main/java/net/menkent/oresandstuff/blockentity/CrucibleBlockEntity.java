@@ -9,6 +9,7 @@ import net.menkent.oresandstuff.block.CrucibleBlock;
 import net.menkent.oresandstuff.recipe.CrucibleRecipe;
 import net.menkent.oresandstuff.screen.CrucibleScreenHandler;
 import net.menkent.oresandstuff.util.fuel.CrucibleFuelRegistry;
+import net.menkent.oresandstuff.util.fuel.ModFuelRegistry;
 import net.menkent.oresandstuff.util.inventory.ImplementedInventory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -152,13 +153,13 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 
 	private boolean canConsumeFuel() {
         ItemStack fuelStack = this.getItem(FUEL_SLOT);
-        return CrucibleFuelRegistry.getFuelTime(fuelStack.getItem()) > 0 && fuelStack.getCount() > 0 && fuelTime <= 0;
+        return ModFuelRegistry.crucibleFuelRegistry.getFuelTime(fuelStack.getItem()) > 0 && fuelStack.getCount() > 0 && fuelTime <= 0;
     }
 
 	private void consumeFuel() {
         if (canConsumeFuel()) {
             ItemStack fuelStack = this.getItem(FUEL_SLOT);
-            int fuelValue = CrucibleFuelRegistry.getFuelTime(fuelStack.getItem());
+            int fuelValue = ModFuelRegistry.crucibleFuelRegistry.getFuelTime(fuelStack.getItem());
             
             if (fuelValue > 0) {
                 fuelTime = fuelValue;

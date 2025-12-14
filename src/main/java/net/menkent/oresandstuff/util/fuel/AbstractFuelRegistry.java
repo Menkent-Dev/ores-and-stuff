@@ -1,5 +1,7 @@
 package net.menkent.oresandstuff.util.fuel;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.world.item.Item;
@@ -13,12 +15,12 @@ public abstract class AbstractFuelRegistry {
     public static Map<Item, Integer> fuelMap;
     public static int time;
 
-    public AbstractFuelRegistry(Map<Item, Integer> fuelMap) {
-        this(fuelMap, 200);
+    public AbstractFuelRegistry() {
+        this(new HashMap<>(), 200);
     }
 
     public AbstractFuelRegistry(Map<Item, Integer> fuelMap, int time) {
-        AbstractFuelRegistry.fuelMap = fuelMap;
+        AbstractFuelRegistry.fuelMap = new HashMap<>(fuelMap);
         AbstractFuelRegistry.time = time;
     }
 
@@ -28,7 +30,7 @@ public abstract class AbstractFuelRegistry {
      * @param item
      * @param burnTime
      */
-    public static void registerFuel(Item item, int burnTime) {
+    public void registerFuel(Item item, int burnTime) {
         fuelMap.put(item, burnTime * time);
     }
 
@@ -38,7 +40,7 @@ public abstract class AbstractFuelRegistry {
      * @param item
      * @param burnTime
      */
-    public static int getFuelTime(Item item) {
+    public int getFuelTime(Item item) {
         return fuelMap.getOrDefault(item, 0);
     }
 
@@ -50,5 +52,12 @@ public abstract class AbstractFuelRegistry {
      */
     public boolean isFuel(Item item) {
         return getFuelTime(item) > 0;
+    }
+
+    /**
+     * Returns a fuel map.
+     */
+    public Map<Item, Integer> getFuelMap() {
+        return Collections.unmodifiableMap(fuelMap);
     }
 }

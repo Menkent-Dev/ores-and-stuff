@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.menkent.oresandstuff.blockentity.CrucibleBlockEntity;
 import net.menkent.oresandstuff.util.fuel.CrucibleFuelRegistry;
+import net.menkent.oresandstuff.util.fuel.ModFuelRegistry;
 import net.menkent.oresandstuff.util.inventory.InventorySlots;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
@@ -26,7 +27,6 @@ public class CrucibleScreenHandler extends AbstractContainerMenu {
     private final ContainerData propertyDelegate;
     public final CrucibleBlockEntity blockEntity;
     public final Player player;
-    private final CrucibleFuelRegistry fuelRegistry = new CrucibleFuelRegistry(fuelMap);
     
     public CrucibleScreenHandler(int syncId, Inventory inventory, BlockPos pos) {
         this(
@@ -64,7 +64,7 @@ public class CrucibleScreenHandler extends AbstractContainerMenu {
         this.addSlot(new Slot(inventory, 10, 133, 34) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return fuelRegistry.isFuel(stack.getItem());
+                return ModFuelRegistry.crucibleFuelRegistry.isFuel(stack.getItem());
             }
         });
         this.addSlot(inventorySlots.new AbstractOutputSlot(inventory, 10, 133, 34) {
@@ -135,7 +135,7 @@ public class CrucibleScreenHandler extends AbstractContainerMenu {
                 }
                 slot.onQuickCraft(itemStack1, itemStack);
             } else if (index >= 11) {
-                if (CrucibleFuelRegistry.getFuelTime(itemStack1.getItem()) > 0) {
+                if (ModFuelRegistry.crucibleFuelRegistry.getFuelTime(itemStack1.getItem()) > 0) {
                     if (!this.moveItemStackTo(itemStack1, 9, 10, false)) {
                         return ItemStack.EMPTY;
                     }
