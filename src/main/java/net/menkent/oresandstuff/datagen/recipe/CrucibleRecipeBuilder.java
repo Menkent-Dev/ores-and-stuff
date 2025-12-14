@@ -43,7 +43,11 @@ public class CrucibleRecipeBuilder implements RecipeBuilder {
     }
 
     public static CrucibleRecipeBuilder crucible(HolderGetter<Item> holderGetter, ItemStack itemStack) {
-        return new CrucibleRecipeBuilder(holderGetter, itemStack);
+        return crucible(holderGetter, itemStack, 1);
+    }
+
+    public static CrucibleRecipeBuilder crucible(HolderGetter<Item> holderGetter, ItemStack itemStack, int i) {
+        return new CrucibleRecipeBuilder(holderGetter, itemStack.copyWithCount(i));
     }
 
     public static CrucibleRecipeBuilder crucible(HolderGetter<Item> holderGetter, ItemLike itemLike) {
@@ -133,11 +137,9 @@ public class CrucibleRecipeBuilder implements RecipeBuilder {
                 if (ingredientString.startsWith("#")) {
                     ResourceLocation tagLocation = ResourceLocation.parse(ingredientString.substring(1));
                     TagKey<Item> tag = TagKey.create(net.minecraft.core.registries.Registries.ITEM, tagLocation);
-                    // problem
                     ingredientList.add(Ingredient.of(items.getOrThrow(tag)));
                 } else {
                     ResourceLocation itemLocation = ResourceLocation.parse(ingredientString);
-                    // another problem
                     ingredientList.add(Ingredient.of(items.getOrThrow(ResourceKey.create(net.minecraft.core.registries.Registries.ITEM, itemLocation)).value()));
                 }
             }

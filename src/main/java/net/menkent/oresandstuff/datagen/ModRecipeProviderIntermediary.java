@@ -43,12 +43,28 @@ public class ModRecipeProviderIntermediary {
         return CrucibleRecipeBuilder.crucible(this.items, itemStack);
     }
 
-    public void crucibleSmelting(ItemStack itemStack, ItemLike ingredient, float experience, ItemLike unlockedBy) {
-        crucibleSmelting(itemStack.getItem(), ingredient, experience, unlockedBy);
+    public CrucibleRecipeBuilder crucible(ItemLike itemLike, int amount) {
+        return CrucibleRecipeBuilder.crucible(this.items, itemLike, amount);
     }
 
-    public void crucibleSmelting(ItemLike itemLike, ItemLike ingredient, float experience, ItemLike unlockedBy) {
-        CrucibleRecipeBuilder.crucible(this.items, itemLike).ingredient(ingredient).experience(experience).unlockedBy(RecipeProvider.getHasName(unlockedBy), this.has(unlockedBy)).save(this.output, OresNStuff.MOD_ID + ":" + getItemName(itemLike) + "_from_crucible_smelting_" + getItemName(ingredient));
+    public CrucibleRecipeBuilder crucible(ItemStack itemStack, int amount) {
+        return CrucibleRecipeBuilder.crucible(this.items, itemStack.getItem(), amount);
+    }
+
+    public void crucibleSmelting(ItemStack output, ItemLike input, float experience, ItemLike unlockedBy) {
+        crucibleSmelting(output.getItem(), 1, input, experience, unlockedBy);
+    }
+
+    public void crucibleSmelting(ItemLike output, ItemLike input, float experience, ItemLike unlockedBy) {
+        crucibleSmelting(output, 1, input, experience, unlockedBy);
+    }
+
+    public void crucibleSmelting(ItemStack output, int outputAmount, ItemLike input, float experience, ItemLike unlockedBy) {
+        crucibleSmelting(output.getItem(), outputAmount, input, experience, unlockedBy);
+    }
+
+    public void crucibleSmelting(ItemLike output, int outputAmount, ItemLike input, float experience, ItemLike unlockedBy) {
+        CrucibleRecipeBuilder.crucible(this.items, output, outputAmount).ingredient(input).experience(experience).unlockedBy(RecipeProvider.getHasName(unlockedBy), this.has(unlockedBy)).save(this.output, OresNStuff.MOD_ID + ":" + getItemName(output) + "_from_crucible_smelting_" + getItemName(input));
     }
 
     public Criterion<InventoryChangeTrigger.TriggerInstance> has(ItemLike itemLike) {
