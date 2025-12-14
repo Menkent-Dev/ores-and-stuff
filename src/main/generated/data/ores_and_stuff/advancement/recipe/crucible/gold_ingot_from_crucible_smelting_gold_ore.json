@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gold_ore": {
+    "has_raw_gold": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:gold_ore"
+            "items": "minecraft:raw_gold"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_gold_ore"
+      "has_raw_gold"
     ]
   ],
   "rewards": {

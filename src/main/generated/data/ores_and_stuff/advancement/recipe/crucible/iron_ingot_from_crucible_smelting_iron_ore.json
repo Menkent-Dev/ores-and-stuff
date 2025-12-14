@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_ore": {
+    "has_raw_iron": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:iron_ore"
+            "items": "minecraft:raw_iron"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iron_ore"
+      "has_raw_iron"
     ]
   ],
   "rewards": {

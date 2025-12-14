@@ -3,7 +3,7 @@
   "cookingtime": 240,
   "experience": 0.7,
   "ingredients": [
-    "minecraft:iron_ore"
+    "minecraft:raw_iron"
   ],
   "result": {
     "count": 3,
