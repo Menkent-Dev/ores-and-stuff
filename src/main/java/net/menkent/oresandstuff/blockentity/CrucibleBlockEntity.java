@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.menkent.oresandstuff.block.CrucibleBlock;
 import net.menkent.oresandstuff.recipe.CrucibleRecipe;
 import net.menkent.oresandstuff.screen.CrucibleScreenHandler;
-import net.menkent.oresandstuff.util.fuel.CrucibleFuelRegistry;
 import net.menkent.oresandstuff.util.fuel.ModFuelRegistry;
 import net.menkent.oresandstuff.util.inventory.ImplementedInventory;
 import net.minecraft.core.BlockPos;

@@ -1,6 +1,5 @@
 package net.menkent.oresandstuff.util.inventory;
 
-import net.menkent.oresandstuff.util.fuel.AbstractFuelRegistry;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;

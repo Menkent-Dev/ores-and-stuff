@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.jetbrains.annotations.Nullable;
 
 import net.menkent.oresandstuff.recipe.CrucibleRecipe;
-import net.menkent.oresandstuff.util.TagUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;

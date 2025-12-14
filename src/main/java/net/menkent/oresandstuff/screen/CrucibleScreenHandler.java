@@ -1,10 +1,6 @@
 package net.menkent.oresandstuff.screen;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.menkent.oresandstuff.blockentity.CrucibleBlockEntity;
-import net.menkent.oresandstuff.util.fuel.CrucibleFuelRegistry;
 import net.menkent.oresandstuff.util.fuel.ModFuelRegistry;
 import net.menkent.oresandstuff.util.inventory.InventorySlots;
 import net.minecraft.core.BlockPos;
@@ -15,12 +11,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class CrucibleScreenHandler extends AbstractContainerMenu {
-    private Map<Item, Integer> fuelMap = new HashMap<>();
     private InventorySlots inventorySlots = new InventorySlots();
 
     private final Container inventory;
