@@ -12,19 +12,6 @@ import net.minecraft.world.item.ItemStack;
  */
 public class InventorySlots {
 
-    public class FuelSlot extends Slot {
-        private AbstractFuelRegistry fuelRegistry;
-        public FuelSlot(AbstractFuelRegistry fuelRegistry, Container container, int id, int x, int y) {
-            super(container, id, x, y);
-            this.fuelRegistry = fuelRegistry;
-        }
-
-        @Override
-        public boolean mayPlace(ItemStack stack) {
-            return fuelRegistry.isFuel(stack.getItem());
-        }
-    }
-
     public class AbstractOutputSlot extends Slot {
         public AbstractOutputSlot(Container container, int id, int x, int y) {
             super(container, id, x, y);

@@ -12,6 +12,6 @@ public class OresNStuffDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModLootTableProvider::new);
 		pack.addProvider(ModBlockTagsProvider::new);
 		pack.addProvider(ModRecipeProvider::new);
-		OresNStuff.LOGGER.info("Datagen Initialized");
+		OresNStuff.LOGGER.info("Datagen done!");
 	}
 }
