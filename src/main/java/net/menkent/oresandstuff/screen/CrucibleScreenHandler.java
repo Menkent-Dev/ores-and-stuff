@@ -67,7 +67,7 @@ public class CrucibleScreenHandler extends AbstractContainerMenu {
                 return ModFuelRegistry.crucibleFuelRegistry.isFuel(stack.getItem());
             }
         });
-        this.addSlot(inventorySlots.new AbstractOutputSlot(inventory, 10, 133, 34) {
+        this.addSlot(inventorySlots.new AbstractOutputSlot(inventory, 11, 133, 34) {
             @Override
             public void onTake(Player player, ItemStack itemStack) {
                 super.onTake(player, itemStack);
