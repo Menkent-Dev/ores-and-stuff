@@ -1,12 +1,12 @@
 {
   "type": "ores_and_stuff:crucible",
   "cookingtime": 240,
-  "experience": 0.7,
+  "experience": 1.0,
   "ingredients": [
-    "minecraft:raw_iron"
+    "minecraft:gold_ore"
   ],
   "result": {
-    "count": 1,
-    "id": "minecraft:iron_ingot"
+    "count": 3,
+    "id": "minecraft:gold_ingot"
   }
 }

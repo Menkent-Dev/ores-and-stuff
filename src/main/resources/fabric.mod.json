@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "ores_and_stuff",
 	"version": "0.0.1",
-	"name": "Ores 'N Stuff",
+	"name": "Ores N' Stuff",
 	"description": "A very WIP which brings a ton of ores, ingots, and items",
 	"authors": [
 		"M3nk3nt"
@@ -30,8 +30,5 @@
 		"java": ">=21",
 		"fabric-api": "*"
 		
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }

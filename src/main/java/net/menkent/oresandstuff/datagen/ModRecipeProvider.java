@@ -61,13 +61,13 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                     .experience(2.5f)
                     .unlockedBy("has_iron_and_coal", createRecipeProvider(registryLookup, exporter).has(Items.IRON_INGOT))
                     .save(exporter);
-                
+
                 recipeProviderIntermediary.crucibleSmelting(Items.GOLD_INGOT, 3, Items.GOLD_ORE, 1.0F, Items.RAW_GOLD);
                 recipeProviderIntermediary.crucibleSmelting(Items.IRON_INGOT, 3, Items.IRON_ORE, 0.7F, Items.RAW_IRON);
                 recipeProviderIntermediary.crucibleSmelting(Items.COPPER_INGOT, 3, Items.COPPER_ORE, 0.7F, Items.RAW_COPPER);
-                recipeProviderIntermediary.crucibleSmelting(Items.GOLD_INGOT, 3, Items.RAW_GOLD, 1.0F, Items.RAW_GOLD);
-                recipeProviderIntermediary.crucibleSmelting(Items.IRON_INGOT, 3, Items.RAW_IRON, 0.7F, Items.RAW_IRON);
-                recipeProviderIntermediary.crucibleSmelting(Items.COPPER_INGOT, 3, Items.RAW_COPPER, 0.7F, Items.RAW_COPPER);
+                recipeProviderIntermediary.crucibleSmelting(Items.GOLD_INGOT, Items.RAW_GOLD, 1.0F, Items.RAW_GOLD);
+                recipeProviderIntermediary.crucibleSmelting(Items.IRON_INGOT, Items.RAW_IRON, 0.7F, Items.RAW_IRON);
+                recipeProviderIntermediary.crucibleSmelting(Items.COPPER_INGOT,  Items.RAW_COPPER, 0.7F, Items.RAW_COPPER);
             }
             
         };

@@ -3,10 +3,10 @@
   "cookingtime": 240,
   "experience": 0.7,
   "ingredients": [
-    "minecraft:raw_iron"
+    "minecraft:copper_ore"
   ],
   "result": {
-    "count": 1,
-    "id": "minecraft:iron_ingot"
+    "count": 3,
+    "id": "minecraft:copper_ingot"
   }
 }
