@@ -35,6 +35,16 @@ public abstract class AbstractFuelRegistry {
     }
 
     /**
+     * Registers fuel into the registry with specified time.
+     * 
+     * @param item
+     * @param burnTime
+     */
+    public void registerFuel(Item item, int burnTime, int time) {
+        fuelMap.put(item, burnTime * time);
+    }
+
+    /**
      * Retrieves the fuel time of the specified item
      * 
      * @param item

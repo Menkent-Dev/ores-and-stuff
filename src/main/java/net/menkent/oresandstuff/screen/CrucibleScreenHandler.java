@@ -104,12 +104,9 @@ public class CrucibleScreenHandler extends AbstractContainerMenu {
 
     public int getScaledFuelProgress() {
         int fuelTime = this.propertyDelegate.get(2);
-        int fuelDuration = this.propertyDelegate.get(3);
+        int fuelDuration = CrucibleBlockEntity.MAX_FUEL;
         int fuelPixelHeight = 32;
 
-        if (fuelDuration == 0) {
-            fuelDuration = 200;
-        }
         return fuelTime * fuelPixelHeight / fuelDuration;
     }
 

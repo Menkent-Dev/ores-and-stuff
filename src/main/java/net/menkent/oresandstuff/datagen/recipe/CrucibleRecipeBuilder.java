@@ -13,8 +13,12 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
@@ -60,8 +64,7 @@ public class CrucibleRecipeBuilder implements RecipeBuilder {
 
 
     public CrucibleRecipeBuilder ingredient(ItemLike item) {
-        // deprecated? MY ASS
-        return this.ingredient(item.asItem().builtInRegistryHolder().key().location().toString());
+        return this.ingredient(BuiltInRegistries.ITEM.getKey(item.asItem()).toString());
     }
 
     public CrucibleRecipeBuilder ingredient(TagKey<Item> tag) {

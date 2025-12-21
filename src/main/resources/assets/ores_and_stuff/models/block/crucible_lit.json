@@ -10,6 +10,7 @@
 		"missing": "ores_and_stuff:block/empty",
 		"inside": "block/lava_still"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"from": [0, 3, 0],

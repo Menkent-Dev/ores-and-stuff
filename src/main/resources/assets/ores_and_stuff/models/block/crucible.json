@@ -9,6 +9,7 @@
 		"north": "ores_and_stuff:block/crucible_north",
 		"missing": "ores_and_stuff:block/empty"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"from": [0, 3, 0],

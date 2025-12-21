@@ -9,10 +9,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class ModBlockEntities {
-  public static final BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BLOCK_ENTITY = Registry.register(
-    BuiltInRegistries.BLOCK_ENTITY_TYPE, 
-    ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "crucible_block_entity"),
-    FabricBlockEntityTypeBuilder.create(CrucibleBlockEntity::new, ModBlocks.CRUCIBLE).build()
+    public static final BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BLOCK_ENTITY = Registry.register(
+      BuiltInRegistries.BLOCK_ENTITY_TYPE, 
+      ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "crucible_block_entity"),
+      FabricBlockEntityTypeBuilder.create(CrucibleBlockEntity::new, ModBlocks.CRUCIBLE).build()
     );
 
   public static void register() {

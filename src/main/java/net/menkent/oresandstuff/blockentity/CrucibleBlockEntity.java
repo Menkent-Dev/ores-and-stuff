@@ -49,21 +49,19 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
     public static final int CRAFTING_SLOTS = 9;
     public static final int FUEL_SLOT = 9;
     public static final int OUTPUT_SLOT = 10;
+	public static final int MAX_FUEL = 1000;
+	public static final float FUEL_CONSUMPTION_RATE = 1.0f;
 
 
 	protected final ContainerData propertyDelegate;
 	public int progress = 0;
 	public int maxProgress = 240; // 20ticks/sec = 12 sec
-	public int fuelTime = 0;
-	public int fuelDuration = 0;
+	public float fuelAmount = 0;
 	public float storedExperience = 0.0f;
 	public int recipesCraftedSinceLastCollection = 0;
 
 	private int particleCooldown = 0;
 	private int soundCooldown = 0;
-
-	BlockPos pos;
-	Level world;
 
 	public CrucibleBlockEntity(BlockPos pos, BlockState state) {
 		super(ModBlockEntities.CRUCIBLE_BLOCK_ENTITY, pos, state);
@@ -73,8 +71,7 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 				return switch (index) {
 					case 0 -> CrucibleBlockEntity.this.progress;
 					case 1 -> CrucibleBlockEntity.this.maxProgress;
-					case 2 -> CrucibleBlockEntity.this.fuelTime;
-					case 3 -> CrucibleBlockEntity.this.fuelDuration;
+					case 2 -> (int) CrucibleBlockEntity.this.fuelAmount;
 					default -> 0;
 				};
 			}
@@ -84,14 +81,13 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 				switch (index) {
 					case 0: CrucibleBlockEntity.this.progress = value;
 					case 1: CrucibleBlockEntity.this.maxProgress = value;
-					case 2: CrucibleBlockEntity.this.fuelTime = value;
-					case 3: CrucibleBlockEntity.this.fuelDuration = value;
+					case 2: CrucibleBlockEntity.this.fuelAmount = (float) value;
 				}
 			}
 
 			@Override
 			public int getCount() {
-				return 4;
+				return 3;
 			}
 		};
 	}
@@ -123,8 +119,7 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
         ContainerHelper.saveAllItems(view, inventory);
         view.putInt("crucible.progress", progress);
 		view.putInt("crucible.max_progress", maxProgress);
-		view.putInt("crucible.fuel_time", fuelTime);
-        view.putInt("crucible.fuel_duration", fuelDuration);
+		view.putFloat("crucible.fuel_amount", fuelAmount);
 		view.putFloat("crucible.stored_experience", storedExperience);
 		view.putInt("crucible.recipes_crafted_since_last_collection", recipesCraftedSinceLastCollection);
     }
@@ -135,8 +130,7 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
         ContainerHelper.loadAllItems(view, inventory);
 		progress = view.getIntOr("crucible.progress", 0 );
 		maxProgress = view.getIntOr("crucible.max_progress", 0);
-		fuelTime = view.getIntOr("crucible.fuel_time", 0);
-        fuelDuration = view.getIntOr("crucible.fuel_duration", 0);
+		fuelAmount = view.getIntOr("crucible.fuel_amount", 0);
 		storedExperience = view.getFloatOr("crucible.stored_experience", 0f);
 		recipesCraftedSinceLastCollection = view.getIntOr("crucible.recipes_crafted_since_last_collection", 0);
 
@@ -147,35 +141,72 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
     }
 
 	private boolean isBurning() {
-        return fuelTime > 0;
+        return fuelAmount > 0;
     }
-
-	private boolean canConsumeFuel() {
-        ItemStack fuelStack = this.getItem(FUEL_SLOT);
-        return ModFuelRegistry.crucibleFuelRegistry.getFuelTime(fuelStack.getItem()) > 0 && fuelStack.getCount() > 0 && fuelTime <= 0;
-    }
-
-	private void consumeFuel() {
-        if (canConsumeFuel()) {
-            ItemStack fuelStack = this.getItem(FUEL_SLOT);
-            int fuelValue = ModFuelRegistry.crucibleFuelRegistry.getFuelTime(fuelStack.getItem());
-            
-            if (fuelValue > 0) {
-                fuelTime = fuelValue;
-                fuelDuration = fuelValue;
-                if (fuelStack.getItem() == Items.LAVA_BUCKET) {
-                    this.setItem(FUEL_SLOT, new ItemStack(Items.BUCKET));
-                } else {
-                    this.removeItem(FUEL_SLOT, 1);
-                }
-                
-                setChanged();
-            }
-        }
+	
+	private boolean canAddFuel(ItemStack fuelStack) {
+		float fuelValue = ModFuelRegistry.crucibleFuelRegistry.getFuelTime(fuelStack.getItem());
+		return fuelValue > 0 && fuelAmount <= MAX_FUEL && !(fuelAmount + fuelValue > MAX_FUEL);
 	}
+	
+	private void addFuel(ItemStack fuelStack) {
+		if (canAddFuel(fuelStack)) {
+			float fuelValue = ModFuelRegistry.crucibleFuelRegistry.getFuelTime(fuelStack.getItem());
+			float spaceAvailable = MAX_FUEL - fuelAmount;
+			float fuelToAdd = Math.min(fuelValue, spaceAvailable);
+			
+			fuelAmount += fuelToAdd;
+			
+			// For containers like buckets/bottles, return empty container
+			Item containerItem = getContainerItem(fuelStack.getItem());
+			if (containerItem != null) {
+				// Handle container return logic
+				ItemStack containerStack = new ItemStack(containerItem);
+				
+				// Try to add container to inventory or drop it
+				boolean added = tryAddContainerToInventory(containerStack);
+				if (!added && !level.isClientSide()) {
+					Block.popResource(level, worldPosition, containerStack);
+				}
+			}
+			
+			fuelStack.shrink(1);
+			setChanged();
+		}
+	}
+
+	private Item getContainerItem(Item item) {
+		if (item == Items.LAVA_BUCKET) {
+			return Items.BUCKET;
+		} else {
+			return null;
+		}
+	}
+	
+	private boolean tryAddContainerToInventory(ItemStack container) {
+		if (getItem(FUEL_SLOT).isEmpty()) {
+			setItem(FUEL_SLOT, container);
+			return true;
+		}
+		
+		for (int i = 0; i < CRAFTING_SLOTS; i++) {
+			if (getItem(i).isEmpty()) {
+				setItem(i, container);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 	public void tick(Level world, BlockPos pos, BlockState state) {
 		boolean lit = !hasCraftingFinished();
 		boolean wasBurning = isBurning();
+		ItemStack fuelStack = getItem(FUEL_SLOT);
+
+		if (canAddFuel(fuelStack)) {
+			addFuel(fuelStack);
+		}
 
 		// the nesting here is diabolical
 		if (isBurning()) {
@@ -188,9 +219,9 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
                     this.maxProgress = recipe.getCookingTime();
 				}
             }
-
+	
 			if (!world.isClientSide() && hasRecipe()) {
-				fuelTime--;
+				fuelAmount--;
 				increaseCraftingProgress();
 				setChanged(world, pos, state);
 
@@ -209,10 +240,6 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 				resetProgress();
 			}
 		}
-
-		if (!isBurning() && canConsumeFuel()) {
-            consumeFuel();
-        }
 
 		if (state.getValue(CrucibleBlock.LIT) != lit) {
 			world.setBlock(pos, state.setValue(CrucibleBlock.LIT, hasCraftingFinished()), Block.UPDATE_CLIENTS);
@@ -346,10 +373,10 @@ public class CrucibleBlockEntity extends BlockEntity implements ExtendedScreenHa
 	}
 
 	public float getFuelProgress() {
-        if (fuelDuration == 0) {
+        if (fuelAmount == 0) {
             return 0;
         }
-        return (float) fuelTime / fuelDuration;
+        return fuelAmount / MAX_FUEL;
     }
 
 	public float getStoredExperience() {

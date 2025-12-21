@@ -11,6 +11,7 @@ import net.menkent.oresandstuff.item.ModItems;
 import net.menkent.oresandstuff.recipe.ModRecipes;
 import net.menkent.oresandstuff.screen.ModScreens;
 import net.menkent.oresandstuff.util.fuel.ModFuelRegistry;
+import net.menkent.oresandstuff.worldgen.ModWorldGeneration;
 
 public class OresNStuff implements ModInitializer {
 	public static final String MOD_ID = "ores_and_stuff";
@@ -30,6 +31,8 @@ public class OresNStuff implements ModInitializer {
 		ModRecipes.register();
 		ModBlockEntities.register();
 		ModScreens.register();
+
+		ModWorldGeneration.generateModWorldGen();
 
 		LOGGER.info("All packages initialized");
 	}

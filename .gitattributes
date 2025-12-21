@@ -7,3 +7,6 @@
 # These are Windows script files and should use crlf
 *.bat           text eol=crlf
 
+# Java and JSON files should use lf
+*.java          text eol=lf
+*.json          text eol=lf
