@@ -3,7 +3,6 @@ package net.menkent.oresandstuff.level.gen;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.menkent.oresandstuff.level.gen.feature.ModPlacedFeatures;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
 public class ModOreGeneration {

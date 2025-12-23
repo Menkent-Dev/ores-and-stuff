@@ -1,8 +1,14 @@
 {
     "block.ores_and_stuff.crucible": "Crucible",
+    "block.ores_and_stuff.deepslate_titanium_ore": "Deepslate Titanium Ore",
     "block.ores_and_stuff.steel_block": "Steel Block",
+    "block.ores_and_stuff.titanium_ore": "Titanium Ore",
 
+    "item.ores_and_stuff.raw_titanium": "Raw Titanium",
     "item.ores_and_stuff.steel_ingot": "Steel Ingot",
+    "item.ores_and_stuff.titanium_ingot": "Titanium Ingot",
 
-    "itemgroup.ores_and_stuff.ores_n_stuff_items": "Ores N' Stuff"
+    "itemgroup.ores_and_stuff.ores_n_stuff_items": "Ores N' Stuff",
+
+    "custom.ores_and_stuff.secret": "Can you keep a secret?"
 }

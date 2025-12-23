@@ -17,9 +17,13 @@ public class ModItemGroups {
         FabricItemGroup.builder().icon(() -> new ItemStack(ModBlocks.CRUCIBLE))
             .title(Component.translatable("itemgroup.ores_and_stuff.ores_n_stuff_items"))
             .displayItems((displayContext, entries) -> {
-                entries.accept(ModBlocks.CRUCIBLE);
                 entries.accept(ModItems.STEEL_INGOT);
                 entries.accept(ModBlocks.STEEL_BLOCK);
+                entries.accept(ModBlocks.TITANIUM_ORE);
+                entries.accept(ModBlocks.DEEPSLATE_TITANIUM_ORE);
+                // entries.accept(ModItems.RAW_TITANIUM);
+                // entries.accept(ModItems.TITANIUM_INGOT);
+                entries.accept(ModBlocks.CRUCIBLE);
             })
             .build()
         );

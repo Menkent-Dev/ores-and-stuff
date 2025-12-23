@@ -43,14 +43,6 @@ public class ModPlacedFeatures {
         return ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, name));
     }
 
-    private static void register(BootstrapContext<PlacedFeature> context,
-        ResourceKey<PlacedFeature> key,
-        Holder<ConfiguredFeature<?, ?>> configuration,
-        List<PlacementModifier> modifiers
-    ) {
-        context.register(key, new PlacedFeature(configuration, List.copyOf(modifiers)));
-    }
-
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(
         BootstrapContext<PlacedFeature> context, 
         ResourceKey<PlacedFeature> key,
@@ -58,5 +50,13 @@ public class ModPlacedFeatures {
         PlacementModifier... modifiers
     ) {
         register(context, key, configuration, List.of(modifiers));
+    }
+
+    private static void register(BootstrapContext<PlacedFeature> context,
+        ResourceKey<PlacedFeature> key,
+        Holder<ConfiguredFeature<?, ?>> configuration,
+        List<PlacementModifier> modifiers
+    ) {
+        context.register(key, new PlacedFeature(configuration, List.copyOf(modifiers)));
     }
 }
