@@ -12,16 +12,27 @@ import net.minecraft.world.item.Item;
 
 public class ModItems {
 
-    public static final Item STEEL_INGOT = register("steel_ingot", Item::new, new Item.Properties());
+    public static final Item STEEL_INGOT = register(
+		"steel_ingot", 
+		Item::new, 
+		new Item.Properties()
+	);
+
+	public static final Item TITANIUM_INGOT = register(
+		"titanium_ingot", 
+		Item::new, 
+		new Item.Properties()
+	);
+
+	public static final Item RAW_TITANIUM = register(
+		"raw_titanium", 
+		Item::new, 
+		new Item.Properties()
+	);
 
     public static Item register(String name, Function<Item.Properties, Item> itemFactory, Item.Properties settings) {
-		// Create the item key.
 		ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, name));
-
-		// Create the item instance.
 		Item item = itemFactory.apply(settings.setId(itemKey));
-
-		// Register the item.
 		Registry.register(BuiltInRegistries.ITEM, itemKey, item);
 
 		return item;

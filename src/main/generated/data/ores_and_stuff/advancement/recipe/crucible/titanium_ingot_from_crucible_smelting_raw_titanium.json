@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_ore": {
+    "has_raw_titanium": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:iron_ore"
+            "items": "ores_and_stuff:raw_titanium"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ores_and_stuff:iron_ingot_from_crucible_smelting_iron_ore"
+        "recipe": "ores_and_stuff:titanium_ingot_from_crucible_smelting_raw_titanium"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iron_ore"
+      "has_raw_titanium"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ores_and_stuff:iron_ingot_from_crucible_smelting_iron_ore"
+      "ores_and_stuff:titanium_ingot_from_crucible_smelting_raw_titanium"
     ]
   }
 }

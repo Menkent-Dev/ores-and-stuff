@@ -1,0 +1,12 @@
+{
+  "type": "ores_and_stuff:crucible",
+  "cookingtime": 240,
+  "experience": 1.1,
+  "ingredients": [
+    "minecraft:deepslate_gold_ore"
+  ],
+  "result": {
+    "count": 3,
+    "id": "minecraft:gold_ingot"
+  }
+}

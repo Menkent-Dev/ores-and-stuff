@@ -21,8 +21,8 @@ public class ModItemGroups {
                 entries.accept(ModBlocks.STEEL_BLOCK);
                 entries.accept(ModBlocks.TITANIUM_ORE);
                 entries.accept(ModBlocks.DEEPSLATE_TITANIUM_ORE);
-                // entries.accept(ModItems.RAW_TITANIUM);
-                // entries.accept(ModItems.TITANIUM_INGOT);
+                entries.accept(ModItems.RAW_TITANIUM);
+                entries.accept(ModItems.TITANIUM_INGOT);
                 entries.accept(ModBlocks.CRUCIBLE);
             })
             .build()

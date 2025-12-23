@@ -1,0 +1,12 @@
+{
+  "type": "ores_and_stuff:crucible",
+  "cookingtime": 240,
+  "experience": 0.8,
+  "ingredients": [
+    "ores_and_stuff:deepslate_titanium_ore"
+  ],
+  "result": {
+    "count": 3,
+    "id": "ores_and_stuff:titanium_ingot"
+  }
+}
