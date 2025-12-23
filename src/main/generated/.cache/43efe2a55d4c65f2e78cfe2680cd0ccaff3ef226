@@ -1,3 +1,5 @@
 // 1.21.8	-999999999-01-01T00:00:00	Ores N' Stuff/Block Loot Tables
 0a8eb161469dea56581345b3d398616f8558d792 data/ores_and_stuff/loot_table/blocks/crucible.json
+e598cb208305fc8180c6084fb8672c6d8e9f3b9b data/ores_and_stuff/loot_table/blocks/deepslate_titanium_ore.json
 9866e2af0a53fffc595f56cb03258d138b5682f9 data/ores_and_stuff/loot_table/blocks/steel_block.json
+c64210b208c4995745f86af5d19ddefcd630f842 data/ores_and_stuff/loot_table/blocks/titanium_ore.json

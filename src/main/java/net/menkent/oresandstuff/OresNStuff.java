@@ -8,10 +8,10 @@ import net.menkent.oresandstuff.block.ModBlocks;
 import net.menkent.oresandstuff.blockentity.ModBlockEntities;
 import net.menkent.oresandstuff.item.ModItemGroups;
 import net.menkent.oresandstuff.item.ModItems;
+import net.menkent.oresandstuff.level.gen.ModWorldGeneration;
 import net.menkent.oresandstuff.recipe.ModRecipes;
 import net.menkent.oresandstuff.screen.ModScreens;
 import net.menkent.oresandstuff.util.fuel.ModFuelRegistry;
-import net.menkent.oresandstuff.worldgen.ModWorldGeneration;
 
 public class OresNStuff implements ModInitializer {
 	public static final String MOD_ID = "ores_and_stuff";
