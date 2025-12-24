@@ -102,6 +102,13 @@ public class ModBlocks {
     // BLOCKS
     //
 
+    public static final Block BLANK = register(
+        "blank_error", 
+        Block::new, 
+        BlockBehaviour.Properties.of(), 
+        true
+    );
+
     public static final Block CRUCIBLE = register(
         "crucible", 
         CrucibleBlock::new, 
