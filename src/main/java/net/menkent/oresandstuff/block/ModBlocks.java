@@ -39,6 +39,27 @@ public class ModBlocks {
         return Registry.register(BuiltInRegistries.BLOCK, blockKey, block);
     }
 
+    public static Block registerItemBlock(
+        String name,
+        MapColor mapColor,
+        float hardness,
+        float blastResistance,
+        SoundType soundType,
+        boolean shouldRegisterItem
+    ) {
+
+        return register(
+            name + "_block",
+            Block::new,
+            BlockBehaviour.Properties.of()
+                .mapColor(mapColor)
+                .strength(hardness, blastResistance)
+                .sound(soundType)
+                .requiresCorrectToolForDrops(),
+            shouldRegisterItem
+        );
+    }
+
     public static Block registerOreBlock(
         String name,
         Function<BlockBehaviour.Properties, Block> blockFactory,
@@ -89,25 +110,21 @@ public class ModBlocks {
         true
     );
 
-    public static final Block STEEL_BLOCK = register(
-		"steel_block",
-		Block::new,
-		BlockBehaviour.Properties.of()
-            .mapColor(MapColor.COLOR_GRAY)
-            .strength(15.0f, 25.0f)
-            .sound(SoundType.METAL)
-            .requiresCorrectToolForDrops(),
-		true
+    public static final Block STEEL_BLOCK = registerItemBlock(
+        "steel", 
+        MapColor.COLOR_GRAY, 
+        15.0f, 
+        25.0f, 
+        SoundType.METAL, 
+        true
     );
 
-    public static final Block TITANIUM_BLOCK = register(
-		"titanium_block",
-		Block::new,
-		BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_LIGHT_BLUE)
-            .strength(22.5f, 32.5f)
-            .sound(SoundType.COPPER)
-            .requiresCorrectToolForDrops(),
+    public static final Block TITANIUM_BLOCK = registerItemBlock(
+		"titanium",
+		MapColor.TERRACOTTA_LIGHT_BLUE,
+        22.5f,
+        32.5f,
+		SoundType.COPPER,
 		true
     );
 
