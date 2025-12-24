@@ -30,8 +30,8 @@ public class ModConfiguredFeatures {
             OreConfiguration.target(deepslateReplaceables, ModBlocks.DEEPSLATE_TITANIUM_ORE.defaultBlockState())
         );
 
-        register(context, TITANIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldTitaniumOres, 6));
-        register(context, DEEPSLATE_TITANIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldTitaniumOres, 7));
+        register(context, TITANIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldTitaniumOres, 8));
+        register(context, DEEPSLATE_TITANIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldTitaniumOres, 9));
     }
 
 

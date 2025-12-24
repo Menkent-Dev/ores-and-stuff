@@ -28,14 +28,14 @@ public class ModPlacedFeatures {
             context, 
             TITANIUM_ORE_PLACED_KEY, 
             configuredFeatures.getOrThrow(ModConfiguredFeatures.TITANIUM_ORE_KEY), 
-            OrePlacementHelper.modifiersWithCount(9, HeightRangePlacement.triangle(VerticalAnchor.absolute(15), VerticalAnchor.absolute(45)))
+            OrePlacementHelper.modifiersWithCount(10, HeightRangePlacement.triangle(VerticalAnchor.absolute(15), VerticalAnchor.absolute(45)))
         );
 
         register(
             context, 
             DEEPSLATE_TITANIUM_ORE_PLACED_KEY, 
             configuredFeatures.getOrThrow(ModConfiguredFeatures.DEEPSLATE_TITANIUM_ORE_KEY), 
-            OrePlacementHelper.modifiersWithCount(3, HeightRangePlacement.uniform(VerticalAnchor.absolute(-55), VerticalAnchor.absolute(-40)))
+            OrePlacementHelper.modifiersWithCount(5, HeightRangePlacement.uniform(VerticalAnchor.absolute(-55), VerticalAnchor.absolute(-40)))
         );
     }
 
