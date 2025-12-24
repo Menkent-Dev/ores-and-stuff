@@ -2,6 +2,8 @@
   "values": [
     "ores_and_stuff:steel_block",
     "ores_and_stuff:titanium_block",
-    "ores_and_stuff:crucible"
+    "ores_and_stuff:crucible",
+    "ores_and_stuff:titanium_ore",
+    "ores_and_stuff:deepslate_titanium_ore"
   ]
 }

@@ -50,8 +50,28 @@ public class ModBlocks {
             BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE)
                 .instrument(NoteBlockInstrument.BASEDRUM)
+                .sound(SoundType.STONE)
                 .requiresCorrectToolForDrops()
                 .strength(3.0F, 3.0F), 
+                
+            shouldRegisterItem
+        );
+    }
+
+    public static Block registerDeepslateOreBlock(
+        String name,
+        Function<BlockBehaviour.Properties, Block> blockFactory,
+        boolean shouldRegisterItem
+    ) {
+        return register(
+            "deepslate_" + name + "_ore",
+            blockFactory, 
+            BlockBehaviour.Properties.of()
+                .mapColor(MapColor.DEEPSLATE)
+                .instrument(NoteBlockInstrument.BASEDRUM)
+                .sound(SoundType.DEEPSLATE)
+                .requiresCorrectToolForDrops()
+                .strength(4.5F, 3.0F), 
                 
             shouldRegisterItem
         );
@@ -100,8 +120,8 @@ public class ModBlocks {
         true
     );
 
-    public static final Block DEEPSLATE_TITANIUM_ORE = registerOreBlock(
-        "deepslate_titanium",
+    public static final Block DEEPSLATE_TITANIUM_ORE = registerDeepslateOreBlock(
+        "titanium",
         (properties) -> {
             return new DropExperienceBlock(ConstantInt.of(0), properties);
         },

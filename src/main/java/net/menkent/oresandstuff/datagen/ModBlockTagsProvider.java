@@ -20,12 +20,17 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
         getOrCreateRawBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
             .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "steel_block"))
             .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "titanium_block"))
-            .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "crucible"));
+            .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "crucible"))
+            .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "titanium_ore"))
+            .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "deepslate_titanium_ore"));
 
         getOrCreateRawBuilder(BlockTags.NEEDS_IRON_TOOL)
             .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "steel_block"))
             .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "titanium_block"))
-            .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "crucible"));
+            .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "crucible"))
+            .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "titanium_ore"))
+            .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "deepslate_titanium_ore"));
+
     }
 
 

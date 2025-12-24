@@ -1,5 +1,5 @@
 // 1.21.8	-999999999-01-01T00:00:00	Ores N' Stuff/Fabric Registry Datagen
 a962f463225b038068b28ac3fde7605bfdb02e4e data/ores_and_stuff/worldgen/configured_feature/deepslate_titanium_ore.json
 42bc37022ef5509799099cc8c2f52f59425d7489 data/ores_and_stuff/worldgen/configured_feature/titanium_ore.json
-3a87d3fdf8489663c5c7a58c789d495bf6e473e6 data/ores_and_stuff/worldgen/placed_feature/deepslate_titanium_ore_placed.json
-4c86373f3090722102097fd1b90c186e4f69982f data/ores_and_stuff/worldgen/placed_feature/titanium_ore_placed.json
+b3e31aabc04596511827e4d3fc1c00c714e2488a data/ores_and_stuff/worldgen/placed_feature/deepslate_titanium_ore_placed.json
+8e381caeafe0009803a96a75fc25079aca311650 data/ores_and_stuff/worldgen/placed_feature/titanium_ore_placed.json
