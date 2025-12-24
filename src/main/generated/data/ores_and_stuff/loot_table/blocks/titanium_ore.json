@@ -49,7 +49,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "minecraft:raw_copper"
+              "name": "ores_and_stuff:raw_titanium"
             }
           ]
         }

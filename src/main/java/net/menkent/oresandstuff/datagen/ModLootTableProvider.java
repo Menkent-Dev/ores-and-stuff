@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.menkent.oresandstuff.block.ModBlocks;
+import net.menkent.oresandstuff.item.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
@@ -30,8 +31,10 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider{
     public void generate() {
         dropSelf(ModBlocks.CRUCIBLE);
         dropSelf(ModBlocks.STEEL_BLOCK);
-        add(ModBlocks.TITANIUM_ORE, multipleOreDrops(ModBlocks.TITANIUM_ORE, Items.RAW_COPPER, 2, 4));
-        add(ModBlocks.DEEPSLATE_TITANIUM_ORE, multipleOreDrops(ModBlocks.DEEPSLATE_TITANIUM_ORE, Items.RAW_COPPER, 3, 5));
+        dropSelf(ModBlocks.TITANIUM_BLOCK);
+        
+        add(ModBlocks.TITANIUM_ORE, multipleOreDrops(ModBlocks.TITANIUM_ORE, ModItems.RAW_TITANIUM, 2, 4));
+        add(ModBlocks.DEEPSLATE_TITANIUM_ORE, multipleOreDrops(ModBlocks.DEEPSLATE_TITANIUM_ORE, ModItems.RAW_TITANIUM, 3, 5));
     }
 
     public LootTable.Builder multipleOreDrops(Block block, Item item, float minDrops, float maxDrops) {

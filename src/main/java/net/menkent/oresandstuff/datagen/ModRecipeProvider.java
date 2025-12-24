@@ -2,6 +2,8 @@ package net.menkent.oresandstuff.datagen;
 
 import java.util.concurrent.CompletableFuture;
 
+import com.google.common.collect.ImmutableList;
+
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.menkent.oresandstuff.block.ModBlocks;
@@ -14,6 +16,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
 public class ModRecipeProvider extends FabricRecipeProvider {
@@ -31,9 +34,12 @@ public class ModRecipeProvider extends FabricRecipeProvider {
     protected RecipeProvider createRecipeProvider(Provider registryLookup, RecipeOutput exporter) {
         return new RecipeProvider(registryLookup, exporter) {
             ModRecipeProviderIntermediary recipeProviderIntermediary = new ModRecipeProviderIntermediary(registryLookup, exporter);
+            private static final ImmutableList<ItemLike> TITANIUM_SMELTABLES = ImmutableList.of(ModBlocks.TITANIUM_ORE, ModBlocks.DEEPSLATE_TITANIUM_ORE, ModItems.RAW_TITANIUM);
 
             @Override
             public void buildRecipes() {
+                // Crafting recipes
+
                 createRecipeProvider(registryLookup, exporter).shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STEEL_BLOCK)
                     .requires(ModItems.STEEL_INGOT, 9)
                     .unlockedBy("has_steel_ingot", createRecipeProvider(registryLookup,exporter).has(ModItems.STEEL_INGOT))
@@ -62,20 +68,105 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                     .unlockedBy("has_iron_and_coal", createRecipeProvider(registryLookup, exporter).has(Items.IRON_INGOT))
                     .save(exporter);
 
-                recipeProviderIntermediary.crucibleSmelting(Items.GOLD_INGOT, 3, Items.GOLD_ORE, 1.0F, Items.GOLD_ORE);
-                recipeProviderIntermediary.crucibleSmelting(Items.IRON_INGOT, 3, Items.IRON_ORE, 0.7F, Items.IRON_ORE);
-                recipeProviderIntermediary.crucibleSmelting(Items.COPPER_INGOT, 3, Items.COPPER_ORE, 0.7F, Items.COPPER_ORE);
-                recipeProviderIntermediary.crucibleSmelting(ModItems.TITANIUM_INGOT, 3, ModBlocks.TITANIUM_ORE, 0.7F, ModBlocks.TITANIUM_ORE);
+                // Smlting & Blasting Recipes
 
-                recipeProviderIntermediary.crucibleSmelting(Items.GOLD_INGOT, 3, Items.DEEPSLATE_GOLD_ORE, 1.1F, Items.DEEPSLATE_GOLD_ORE);
-                recipeProviderIntermediary.crucibleSmelting(Items.IRON_INGOT, 3, Items.DEEPSLATE_IRON_ORE, 0.8F, Items.DEEPSLATE_IRON_ORE);
-                recipeProviderIntermediary.crucibleSmelting(Items.COPPER_INGOT, 3, Items.DEEPSLATE_COPPER_ORE, 0.8F, Items.DEEPSLATE_COPPER_ORE);
-                recipeProviderIntermediary.crucibleSmelting(ModItems.TITANIUM_INGOT, 3, ModBlocks.DEEPSLATE_TITANIUM_ORE, 0.8F, ModBlocks.DEEPSLATE_TITANIUM_ORE);
+                oreSmelting(TITANIUM_SMELTABLES, RecipeCategory.MISC, ModItems.TITANIUM_INGOT, 0.7f, 200, "titanium_ingot");
 
-                recipeProviderIntermediary.crucibleSmelting(Items.GOLD_INGOT, Items.RAW_GOLD, 1.0F, Items.RAW_GOLD);
-                recipeProviderIntermediary.crucibleSmelting(Items.IRON_INGOT, Items.RAW_IRON, 0.7F, Items.RAW_IRON);
-                recipeProviderIntermediary.crucibleSmelting(Items.COPPER_INGOT, Items.RAW_COPPER, 0.7F, Items.RAW_COPPER);
-                recipeProviderIntermediary.crucibleSmelting(ModItems.TITANIUM_INGOT, ModItems.RAW_TITANIUM, 0.7F, ModItems.RAW_TITANIUM);
+                oreBlasting(TITANIUM_SMELTABLES, RecipeCategory.MISC, ModItems.TITANIUM_INGOT, 0.7f, 100, "titanium_ingot");
+                
+
+                // Crucible Recipes
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    Items.GOLD_INGOT, 
+                    3, 
+                    Items.GOLD_ORE, 
+                    1.0F, 
+                    Items.GOLD_ORE
+                );
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    Items.IRON_INGOT, 
+                    3, 
+                    Items.IRON_ORE, 
+                    0.7F, 
+                    Items.IRON_ORE
+                );
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    Items.COPPER_INGOT, 
+                    3, 
+                    Items.COPPER_ORE, 
+                    0.7F, 
+                    Items.COPPER_ORE
+                );
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    ModItems.TITANIUM_INGOT, 
+                    3, 
+                    ModBlocks.TITANIUM_ORE, 
+                    0.7F, 
+                    ModBlocks.TITANIUM_ORE
+                );
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    Items.GOLD_INGOT, 
+                    3, 
+                    Items.DEEPSLATE_GOLD_ORE, 
+                    1.1F, 
+                    Items.DEEPSLATE_GOLD_ORE
+                );
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    Items.IRON_INGOT, 
+                    3, 
+                    Items.DEEPSLATE_IRON_ORE, 
+                    0.8F, 
+                    Items.DEEPSLATE_IRON_ORE
+                );
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    Items.COPPER_INGOT, 
+                    3, 
+                    Items.DEEPSLATE_COPPER_ORE, 
+                    0.8F, 
+                    Items.DEEPSLATE_COPPER_ORE
+                );
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    ModItems.TITANIUM_INGOT, 
+                    3, 
+                    ModBlocks.DEEPSLATE_TITANIUM_ORE, 
+                    0.8F, 
+                    ModBlocks.DEEPSLATE_TITANIUM_ORE
+                );
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    Items.GOLD_INGOT, 
+                    Items.RAW_GOLD, 
+                    1.0F, 
+                    Items.RAW_GOLD
+                );
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    Items.IRON_INGOT, 
+                    Items.RAW_IRON, 
+                    0.7F, 
+                    Items.RAW_IRON);
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    Items.COPPER_INGOT, 
+                    Items.RAW_COPPER, 
+                    0.7F, 
+                    Items.RAW_COPPER
+                );
+
+                recipeProviderIntermediary.crucibleSmelting(
+                    ModItems.TITANIUM_INGOT, 
+                    ModItems.RAW_TITANIUM, 
+                    0.7F, 
+                    ModItems.RAW_TITANIUM
+                );
             }
             
         };

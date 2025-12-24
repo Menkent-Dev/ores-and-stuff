@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -42,10 +41,10 @@ public class CrucibleBlock extends BaseEntityBlock {
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
     
     private static final VoxelShape FRONT = Block.box(0.0, 4.0, 0.0, 16.0, 16.0, 3.0);
-    private static final VoxelShape BACK =  Block.box(0.0, 4.0, 13.0, 16.0, 16.0, 16.0);
+    private static final VoxelShape BACK = Block.box(0.0, 4.0, 13.0, 16.0, 16.0, 16.0);
     private static final VoxelShape SIDE1 = Block.box(13.0, 4.0, 3.0, 16.0, 16.0, 13.0);
     private static final VoxelShape SIDE2 = Block.box(0.0, 4.0, 3.0, 3.0, 16.0, 13.0);
-    private static final VoxelShape TOP =   Block.box(3.0, 14.0, 3.0, 13.0, 16.0, 13.0);
+    private static final VoxelShape TOP = Block.box(3.0, 14.0, 3.0, 13.0, 16.0, 13.0);
     private static final VoxelShape BOTTOM = Block.box(0.0, 3.0, 0.0, 16.0, 4.0, 16.0);
     private static final VoxelShape LEG1 = Block.box(0.0, 0.0, 0.0, 4.0, 3.0, 4.0);
     private static final VoxelShape LEG2 = Block.box(12.0, 0.0, 0.0, 16.0, 3.0, 4.0);
@@ -84,11 +83,6 @@ public class CrucibleBlock extends BaseEntityBlock {
     @Override
     public VoxelShape getCollisionShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         return SHAPE;
-    }
-
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
     }
 
     @Override

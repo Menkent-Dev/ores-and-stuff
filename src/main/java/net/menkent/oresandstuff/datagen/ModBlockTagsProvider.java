@@ -19,10 +19,12 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
     protected void addTags(Provider wrapperLookup) {
         getOrCreateRawBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
             .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "steel_block"))
+            .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "titanium_block"))
             .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "crucible"));
 
         getOrCreateRawBuilder(BlockTags.NEEDS_IRON_TOOL)
             .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "steel_block"))
+            .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "titanium_block"))
             .addElement(ResourceLocation.fromNamespaceAndPath(OresNStuff.MOD_ID, "crucible"));
     }
 

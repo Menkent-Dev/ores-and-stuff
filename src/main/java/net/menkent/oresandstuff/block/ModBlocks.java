@@ -80,6 +80,18 @@ public class ModBlocks {
 		true
     );
 
+    public static final Block TITANIUM_BLOCK = register(
+		"titanium_block",
+		Block::new,
+		BlockBehaviour.Properties.of()
+            .mapColor(MapColor.TERRACOTTA_LIGHT_BLUE)
+            .strength(22.5f, 32.5f)
+            .sound(SoundType.COPPER)
+            .requiresCorrectToolForDrops(),
+		true
+    );
+
+
     public static final Block TITANIUM_ORE = registerOreBlock(
         "titanium",
         (properties) -> {
